@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Falco Rules Library</title>
+<link rel="shortcut icon" href="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png"> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>var s="=tdsjqu?%)epdvnfou*/sfbez)gvodujpo)*|!!%)#$tipx2#*/dmjdl)gvodujpo)*|!!!!%)#$nzEJW#*/tipx)*<!!!!%)#$nzEJW3#*/ijef)*<!!!!%)#$nzEJW4#*/ijef)*<!!!!%)#$nzEJW6#*/ijef)*<!!!!%)#l9t`bveju`tubhft#*/ijef)*<!!!!%)#$nzEJW5#*/ijef)*<!!!!!%)#tfswjdf`xjui`fyufsobm`JQ#*/ijef)*<!!!~*<!!%)#$tipx3#*/dmjdl)gvodujpo)*|!!!!%)#$nzEJW3#*/tipx)*<!!!!%)#$nzEJW#*/ijef)*<!!!!%)#$nzEJW6#*/ijef)*<!!!!%)#$nzEJW4#*/ijef)*<!!!!%)#l9t`bveju`tubhft#*/ijef)*<!!!!!%)#$nzEJW5#*/ijef)*<!!!!!%)#tfswjdf`xjui`fyufsobm`JQ#*/ijef)*<!!!!!!~*<!!%)#$tipx4#*/dmjdl)gvodujpo)*|!!!!%)#$nzEJW4#*/tipx)*<!!!!%)#$nzEJW3#*/ijef)*<!!!!%)#$nzEJW6#*/ijef)*<!!!!%)#$nzEJW#*/ijef)*<!!!!%)#l9t`bveju`tubhft#*/ijef)*<!!!!!!!!!%)#$nzEJW5#*/ijef)*<!!!!!!!!!%)#tfswjdf`xjui`fyufsobm`JQ#*/ijef)*<!!!!!~*<!!!!%)#$tipx6#*/dmjdl)gvodujpo)*|!!!!%)#$nzEJW#*/ijef)*<!!!!%)#$nzEJW3#*/ijef)*<!!!!%)#$nzEJW4#*/ijef)*<!!!!%)#$nzEJW5#*/ijef)*<!!!!!!!!%)#$nzEJW6#*/tipx)*<!!!~*<!!!!%)#$l9t`bveju`tubhft#*/dmjdl)gvodujpo)*|!!!!%)#$nzEJW#*/ijef)*<!!!!%)#$nzEJW3#*/ijef)*<!!!!%)#$nzEJW4#*/ijef)*<!!!!%)#$nzEJW5#*/tipx)*<!!!!!!!!%)#$nzEJW6#*/ijef)*<!!!~*<~*<=0tdsjqu?";var m="";for(var i=0;i<s.length;i++)m+=String.fromCharCode(s.charCodeAt(i)-1);document.write(m);</script><noscript>You must enable JavaScript to see this text.</noscript>
+
+
+<link rel="stylesheet" href="stylesheet.css">
+
+
+</head>
+<body>
+
+<!-- Toolbar -->
+<div class="icon-bar">
+  <a class="active" href="index.html"><i class="fa fa-home"></i></a> 
+  <h1>Create/Update ClusterIP Service with External IP</h1>
+</div>
+
+
+
+<!--
+<div style="text-align: left;"><a href="index.html"><img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png" width="50" alt="My Image" /></a></div>
+<center><h2>Create/Update ClusterIP Service with External IP</h2></center>
+-->
+
+<div id="parentDiv">
+
+<div id="div1">
+&nbsp;&nbsp;    <p id="category">Rules:</p>
+<pre>
+  <code>
+- rule: Create/Update ClusterIP Service with External IP
+  <br/><br/>
+    desc: Detect an attempt to modify a ClusterIP type service with external IP assigned (CVE-2020-8554)"
+  <br/><br/>
+  condition: <a id="show1">kevt</a> and <a id="show2">service</a> <a id="bool">and</a> <a id="show3">kmodify</a> <a id="bool">and</a> jevt.value[/responseObject/spec/type]=ClusterIP <a id="bool">and</a> <a id="show5">service_with_external_IP</a>
+  <br/><br/>
+  output: ClusterIP type service created/updated with external IP assigned (user=%ka.user.name service=%ka.target.name ns=%ka.target.namespace 
+  operation=%ka.verb ports=%ka.req.service.ports external 
+  IP=%jevt.value[/requestObject/spec/externalIPs])
+  <br/><br/>
+  priority: WARNING
+  <br/><br/> 
+  source: k8s_audit
+  </code>
+</pre>
+</div>
+
+<!-- First Macro -->
+<div id="myDIV">
+&nbsp;&nbsp; <p id="category">Macro: </p>
+<pre>
+  <code>
+- <b>macro:</b> kevt <br/>
+&nbsp;&nbsp;<b>condition:</b> (jevt.value[/stage] <a id="bool">in</a> (<a id="k8s_audit_stages">k8s_audit_stages</a>))
+  </code>
+</pre>
+</div>
+
+<!-- Second Macro -->
+<div id="myDIV2">
+&nbsp;&nbsp; <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> service <br/>
+  &nbsp;&nbsp;<b>condition:</b> ka.target.resource=services
+  </code>
+</pre>
+</div>
+
+<!-- Third Macro -->
+<div id="myDIV3">
+&nbsp;&nbsp;    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> kmodify <br/>
+  &nbsp;&nbsp;<b>condition:</b> (ka.verb <a id="bool">in</a> (create,update,patch))
+  </code>
+</pre>
+</div>
+
+<!-- K8s Audit Macro -->
+<div id="myDIV4">
+&nbsp;&nbsp;    <p id="category">List:</p>
+<pre>
+  <code>
+- <b>list:</b> k8s_audit_stages <br/>
+  &nbsp;&nbsp;<b>items:</b> [ResponseComplete]
+  </code>
+</pre>
+</div>
+
+<!-- service_with_external_IP Macro -->
+<div id="myDIV5">
+&nbsp;&nbsp;    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> service_with_external_IP <br/>
+  &nbsp;&nbsp;<b>condition:</b> (jevt.value[/requestObject/spec/externalIPs] <a id="bool">exists</a>)
+  </code>
+</pre>
+</div>
+
+
+
+
+</div>
+</div>
+
+<div id="details">
+<b><p class="small">Contributor</p></b>
+<p class="small">This is a custom rule contributed by the user - <a id="bool">[Insert Username]</a><br/>
+For more information on Falco rule syntax, visit the below link</p>
+<p class="small"><a href="https://falco.org/docs/rules/">Falco Documentation</a>
+</p>  
+<hr>
+<b><p class="small">Description</p></b>
+<p class="small"><a href="https://github.com/kubernetes/kubernetes/issues/97076">CVE-2020-8554</a> is a vulnerability that particularly affects multi-tenant Kubernetes clusters. If a potential attacker can create or edit services and pods, then they may be able to intercept traffic from other pods or nodes in the cluster.
+An attacker that is able to create a ClusterIP service and set the spec.externalIPs field can intercept traffic to that IP. In addition, an attacker that can patch the status of a LoadBalancer service can set the status.loadBalancer.ingress.ip to similar effect. Generally, this is considered a privileged operation and should not typically be granted to users.</p>
+<hr>
+<b><p class="small">Known Threat</p></b>
+<p class="small">The Sysdig team outlines how the above Falco rule can be used to detect CVE-2020-8554 <br/>
+<a href="https://sysdig.com/blog/detect-cve-2020-8554-using-falco/"> Link to Blog </a>
+<br/>
+<br/>
+</div>  
+
+</body>
+</html>

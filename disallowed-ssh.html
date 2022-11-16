@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Falco Rules Library</title>
+<link rel="shortcut icon" href="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png">   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#show1").click(function(){
+    $("#myDIV").show();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV5").hide();
+    $("k8s_audit_stages").hide();
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide(); 
+        $("#myDIV6").hide(); 
+  });
+  $("#show2").click(function(){
+    $("#myDIV3").hide();
+    $("#myDIV2").show();
+    $("#myDIV").hide();
+    $("#myDIV5").hide();
+    $("k8s_audit_stages").hide(); 
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide();
+        $("#myDIV6").hide();     
+  });
+  $("#show3").click(function(){
+    $("#myDIV3").show();
+    $("#myDIV2").hide();
+    $("#myDIV5").hide();
+    $("#myDIV").hide();
+    $("k8s_audit_stages").hide(); 
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide();
+    $("#myDIV6").hide();    
+  });
+
+    $("#show5").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").hide();    
+    $("#myDIV5").show();
+    $("#myDIV6").hide();      
+  });
+
+    $("#show4").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").show();    
+    $("#myDIV5").hide();
+    $("#myDIV6").hide();      
+  });
+
+      $("#show6").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").hide();    
+    $("#myDIV5").hide();
+    $("#myDIV6").show();      
+  });  
+
+    $("#k8s_audit_stages").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").show();    
+    $("#myDIV5").hide(); 
+    $("#myDIV6").hide(); 
+  });
+
+
+});
+</script>
+
+<link rel="stylesheet" href="stylesheet.css">
+
+</head>
+<body>
+
+<!--<div class="icon-bar">
+  <a class="active" href="#"><i class="fa fa-home"></i></a> 
+  <a href="#"><i class="fa fa-search"></i></a> 
+  <a href="#"><i class="fa fa-envelope"></i></a> 
+  <a href="#"><i class="fa fa-globe"></i></a>
+  <a href="#"><i class="fa fa-trash"></i></a> 
+</div>-->
+
+<!-- Toolbar -->
+<div class="icon-bar">
+  <a class="active" href="index.html"><i class="fa fa-home"></i></a> 
+  <h1>Disallowed SSH Connection</h1>
+</div>
+
+<br/>
+<br/>
+
+<!--<div style="text-align: left;"><a href="index.html"><img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png" width="50" alt="My Image" /></a></div>
+<center><h2>Detect outbound connections to common miner pool ports</h2></center>-->
+
+<div id="parentDiv">
+
+<div id="div1">
+    <p id="category">Rules:</p>
+
+<div id="clipboard">
+<pre>
+  <code>
+- <b>rule:</b> Disallowed SSH Connection
+  <br/><br/>
+  &nbsp;&nbsp;<b>desc:</b> Detect any new ssh connection to a host other than those in an allowed group of hosts
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> (<a id="show1">inbound_outbound</a>) <a id="bool">and</a> <a id="show2">ssh_port</a> <a id="bool">and not</a> <a id="show3">allowed_ssh_hosts</a>
+  <br/><br/>
+  &nbsp;&nbsp;<b>enabled:</b> false
+  <br/><br/>
+  &nbsp;&nbsp;<b>output:</b> > Disallowed SSH Connection (command=%proc.cmdline pid=%proc.pid <br/>
+  &nbsp;&nbsp;&nbsp;connection=%fd.name user=%user.name user_loginuid=%user.loginuid <br/>
+  &nbsp;&nbsp;&nbsp;container_id=%container.id image=%container.image.repository)
+  <br/><br/>
+  &nbsp;&nbsp;<b>priority:</b> NOTICE
+  <br/><br/>
+  &nbsp;&nbsp;<b>tags:</b> [network, mitre_remote_service]
+  </code>
+</pre>
+</div>
+
+<!-- Button to copy source code -->
+<center><div class="tooltip">
+<button onclick="copyToClip(document.getElementById('clipboard').innerHTML)" onmouseout="outFunc()">Copy Rule
+<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+</button>
+</div></center>
+
+</div>
+
+
+
+<!-- First Macro -->
+<div id="myDIV">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> inbound_outbound
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;((((evt.type <a id="bool">in</a> (accept,listen,connect) <a id="bool">and</a> evt.dir=<)) <a id="bool">and</a> (fd.typechar = 4 <a id="bool">or</a> <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;fd.typechar = 6)) <a id="bool">and</a>(fd.ip != "0.0.0.0" <a id="bool">and</a> fd.net != "127.0.0.0/8") <a id="bool">and</a> (fd.ip != <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;"0.0.0.0" <a id="bool">and</a> fd.net != "127.0.0.0/8") <a id="bool">and</a> (evt.rawres >= 0 <a id="bool">or</a> evt.res = EINPROGRESS))
+  </code>
+</pre>
+</div>
+
+<!-- Second Macro -->
+<div id="myDIV2">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> ssh_port
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> fd.sport=22
+  </code>
+</pre>
+</div>
+
+<!-- Third Macro -->
+<div id="myDIV3">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> allowed_ssh_hosts
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> <a id="show2">ssh_port</a>
+  </code>
+</pre>
+</div>
+
+<!-- K8s Audit Macro -->
+<div id="myDIV4">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> minerpool_other
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> (fd.sport <a id="bool">in</a> (<a id="show5">miner_ports</a>) <a id="bool">and</a> fd.sip.name <a id="bool">in</a> (<a id="show6">miner_domains</a>))
+  </code>
+</pre>
+</div>
+
+<!-- Miner Ports Macro -->
+<div id="myDIV5">
+    <p id="category">Macros:</p>
+<pre>
+  <code>
+- <b>list:</b> miner_ports
+  <br/><br/>
+  &nbsp;&nbsp;<b>items:</b> [
+        25, 3333, 3334, 3335, 3336, 3357, 4444, 5555, 5556, 5588, 5730, <br/> 
+        &nbsp;&nbsp;&nbsp;6666, 7777,7778, 8000, 8001, 8008, 8080, 8118, 8333, 8888, 8899, 9332, <br/>
+        &nbsp;&nbsp;&nbsp;9999, 14433, 14444, 45560, 45700, 6099 ]
+  </code>
+</pre>
+</div>
+
+<!-- Miner Domains Macro -->
+<div id="myDIV6">
+    <p id="category">Macros:</p>
+<pre>
+  <code>
+- <b>list:</b> miner_domains
+<br/><br/>
+ &nbsp;&nbsp;<b>items:</b> ["asia1.ethpool.org","ca.minexmr.com","cn.stratum.slushpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"eth-ar.dwarfpool.com","eth-asia.dwarfpool.com","eth-asia1.nanopool.org", <br/>
+  &nbsp;&nbsp;&nbsp;"eth-au.dwarfpool.com","eth-au1.nanopool.org","eth-br.dwarfpool.com", <br/>
+  &nbsp;&nbsp;&nbsp;"eth-cn.dwarfpool.com","eth-cn2.dwarfpool.com","eth-eu.dwarfpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"eth-eu1.nanopool.org","eth-eu2.nanopool.org","eth-hk.dwarfpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"eth-jp1.nanopool.org","eth-ru.dwarfpool.com","de.minexmr.com",<br/>
+  &nbsp;&nbsp;&nbsp;"eth-ru2.dwarfpool.com","eth-sg.dwarfpool.com","fr.minexmr.com",<br/>
+  &nbsp;&nbsp;&nbsp;"eth-us-east1.nanopool.org","eth-us-west1.nanopool.org","xmr-jp1.nanopool.org",<br/>
+  &nbsp;&nbsp;&nbsp;"eth-us.dwarfpool.com","eth-us2.dwarfpool.com","stratum-dash.antpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"eu.stratum.slushpool.com","eu1.ethermine.org","zec.antpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"eu1.ethpool.org","mine.moneropool.com","mine.xmrpool.net","dash.antpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"pool.minexmr.com","pool.monero.hashvault.pro","stratum-btm.antpool.com"<br/>
+  &nbsp;&nbsp;&nbsp;"pool.supportxmr.com","sg.minexmr.com","us-east.stratum.slushpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"sg.stratum.slushpool.com","stratum-eth.antpool.com","btm.antpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"stratum-ltc.antpool.com","stratum-zec.antpool.com","stratum.antpool.com",<br/>
+  &nbsp;&nbsp;&nbsp;"us1.ethermine.org","us1.ethpool.org","us2.ethermine.org","us2.ethpool.org",<br/>
+  &nbsp;&nbsp;&nbsp;"xmr-asia1.nanopool.org","xmr-au1.nanopool.org","xmr-us-east1.nanopool.org",<br/>
+  &nbsp;&nbsp;&nbsp;"xmr-eu1.nanopool.org","xmr-eu2.nanopool.org","stratum-xmc.antpool.com",<br/>    
+  &nbsp;&nbsp;&nbsp;"xmr-us-west1.nanopool.org","xmr.crypto-pool.fr","xmr.pool.minergate.com",<br/>
+  &nbsp;&nbsp;&nbsp;"rx.unmineable.com","ss.antpool.com","xmc.antpool.com","eth.antpool.com", ] 
+  </code>
+</pre>
+</div>
+
+
+
+
+</div>
+</div>
+
+<div id="details">
+<b><p class="small">How to Enable</p></b>
+<p class="small">This rule is <a id="bool">DISABLED</a> by default<br/>
+Change to <a id="bool2">enabled: true</a> within the Falco rule to enable it</p>  
+<hr>
+<b><p class="small">Description</p></b>
+<p class="small">Every compliance audit will ask you to secure SSH, and every time a scanner checks the configuration or CSPM of your cloud account you’ll be warned for it. For example, if you don’t secure SSH on EC2, you’ll certainly get a critical alert stating that one of your Security Groups has its SSH port (22) open to the world. </p>
+<hr>
+<b><p class="small">Known Threat</p></b>
+<p class="small">When talking about AWS, SSH is enabled by default on EC2 instances. As soon as you spin up a machine, SSH access is configured via a RSA key pair. And it’s rather easy to connect via an SSH client if you have access to those keys. However, this ease of access also makes it convenient for attackers. The Sysdig team explains how to secure SSH on EC2 with the following best practices. <br/>
+<a href="https://sysdig.com/blog/aws-secure-ssh-ec2-threats/"> Link to Blog </a>
+<br/>
+<br/>
+</div>  
+
+<script>
+function copyToClip(str) {
+  function listener(e) {
+    e.clipboardData.setData("text/html", str);
+    e.clipboardData.setData("text/plain", str);
+    e.preventDefault();
+  }
+  document.addEventListener("copy", listener);
+  document.execCommand("copy");
+  document.removeEventListener("copy", listener);
+};
+
+var tooltip = document.getElementById("myTooltip");
+tooltip.innerHTML = "Copied: " + copyText.value;
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
+</script>
+
+</body>
+</html>

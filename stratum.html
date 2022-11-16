@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Falco Rules Library</title>
+<link rel="shortcut icon" href="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png">   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#show1").click(function(){
+    $("#myDIV").show();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV5").hide();
+    $("k8s_audit_stages").hide();
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide(); 
+  });
+  $("#show2").click(function(){
+    $("#myDIV2").show();
+    $("#myDIV").hide();
+    $("#myDIV5").hide();
+    $("#myDIV3").hide();
+    $("k8s_audit_stages").hide(); 
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide();    
+  });
+  $("#show3").click(function(){
+    $("#myDIV3").show();
+    $("#myDIV2").hide();
+    $("#myDIV5").hide();
+    $("#myDIV").hide();
+    $("k8s_audit_stages").hide(); 
+        $("#myDIV4").hide(); 
+        $("service_with_external_IP").hide();   
+  });
+
+    $("#show5").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").hide();    
+    $("#myDIV5").show(); 
+  });
+
+    $("#k8s_audit_stages").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").show();    
+    $("#myDIV5").hide(); 
+  });
+
+
+});
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+  #bool { color: red; }
+  #bool2 { color: green; }
+  a { color: blue; }
+  p { margin: 0; padding: 0; }
+  code { background-color: #eee;}
+  pre code {
+  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 20px;
+  white-space: normal;
+  align-content: left;  }
+  #parentDiv { width: 100%; height: 70%;  }
+  #div1 { width: 49%; float:left;  }
+  #myDIV { display:none; width: 49%; float:right;  }
+    #myDIV2 {
+    display:none;  
+    width: 49%;
+    float:right;  }
+    #myDIV3 {
+    display:none;  
+    width: 49%;
+    float:right;  } 
+    #myDIV4 {
+    display:none;  
+    width: 49%;
+    float:right;  }  
+    #myDIV5 {
+    display:none;  
+    width: 49%;
+    float:right;  }    
+  #macro1 {
+  background-color: #eee;
+  border: 1px solid #999;
+  width: 45%;
+  display: block;
+  padding: 20px;
+  white-space: normal;
+  float: right;  }
+  #details { position: absolute; bottom: 0;} 
+</style>
+</head>
+<body>
+
+<div style="text-align: left;"><a href="index.html"><img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png" width="50" alt="My Image" /></a></div> <br/><br/>
+<!--<center><h2>Detect crypto miners using the Stratum protocol</h2></center>-->
+
+<div id="parentDiv">
+
+<div id="div1">
+    Rules:
+<pre>
+  <code>
+  - rule: Detect crypto miners using the Stratum protocol
+  <br/><br/>  
+  &nbsp;&nbsp;desc: Miners typically specify the mining pool to connect to with a URI that 
+  &nbsp;&nbsp;&nbsp;begins with 'stratum+tcp'
+  <br/><br/>
+  &nbsp;&nbsp;condition: <a id="show1">spawned_process</a> <a id="bool">and</a> (proc.cmdline contains "stratum+tcp" <a id="bool">or</a> 
+  &nbsp;&nbsp;&nbsp;proc.cmdline <a id="bool">contains</a> "stratum2+tcp" <a id="bool">or</a> proc.cmdline <a id="bool">contains</a> "stratum+ssl" <a id="bool">or</a> &nbsp;&nbsp;&nbsp;proc.cmdline <a id="bool">contains</a> "stratum2+ssl")
+  <br/><br/>
+  &nbsp;&nbsp;output: Possible miner running (command=%proc.cmdline pid=%proc.pid 
+  &nbsp;&nbsp;&nbsp;container=%container.info image=%container.image.repository)
+  <br/><br/>
+  &nbsp;&nbsp;priority: CRITICAL
+  <br/><br/>
+  &nbsp;&nbsp;tags: [process, mitre_execution]
+  </code>
+</pre>
+</div>
+
+<!-- First Macro -->
+<div id="myDIV">
+    Macros:
+<pre>
+  <code>
+- <b>macro:</b> spawned_process
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (execve, execveat) <a id="bool">and</a> evt.dir=<)
+  </code>
+</pre>
+</div>
+
+<!-- Second Macro -->
+<div id="myDIV2">
+    Macros:
+<pre>
+  <code>
+- macro: trusted_images_query_miner_domain_dns
+  condition: (container.image.repository in (docker.io/falcosecurity/falco, falcosecurity/falco, public.ecr.aws/falcosecurity/falco))
+  </code>
+</pre>
+</div>
+
+<!-- Third Macro -->
+<div id="myDIV3">
+    Macros:
+<pre>
+  <code>
+- macro: kmodify
+  condition: (ka.verb in (create,update,patch))
+  </code>
+</pre>
+</div>
+
+<!-- K8s Audit Macro -->
+<div id="myDIV4">
+    Macros:
+<pre>
+  <code>
+- list: k8s_audit_stages
+  items: [ResponseComplete]
+  </code>
+</pre>
+</div>
+
+<!-- service_with_external_IP Macro -->
+<div id="myDIV5">
+    Macros:
+<pre>
+  <code>
+- macro: service_with_external_IP
+  condition: (jevt.value[/requestObject/spec/externalIPs] <a id="bool">exists</a>)
+  </code>
+</pre>
+</div>
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+<div id="details">
+<b><p>How to Enable</p></b>
+<p>This rule is <a id="bool2">ENABLED</a> by default<br/></p>  
+<hr>
+<b><p>Description</p></b>
+<p>GitHub Actions offer the ability to run arbitrary code in response to selected GitHub events (for example, merging a PR). They are a great way to extend code repositories with automation and integrations. <br/>
+  GitHub Actions are executed by a computing pool provided by GitHub/Microsoft. Only problem: such a computing pool is also a juicy target for the bad guys trying to make a quick buck by mining bitcoin. <br/>
+<a href="https://falco.org/blog/falco-plugin-github/#unpacking-falco-s-github-rules"  target="_blank" > Link to Falco Documentation</a> </p>
+<hr>
+<b><p>Known Incident</p></b>
+<p>Sysdig's Threat Research Team uncovered a massive cryptomining operation leveraging GitHub Actions <br/>
+<a href="https://sysdig.com/blog/massive-cryptomining-operation-github-actions/"  target="_blank" >Link to Blog Post</a> </p>
+<br/>
+</div> 
+
+</body>
+</html>

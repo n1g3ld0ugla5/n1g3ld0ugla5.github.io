@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Falco Rules Library</title>
+<link rel="shortcut icon" href="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png">   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#show1").click(function(){
+    $("#myDIV").show();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV5").hide();
+    $("k8s_audit_stages").hide();
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide(); 
+        $("#myDIV6").hide(); 
+        $("#myDIV7").hide();
+        $("#myDIV8").hide();  
+  });
+  $("#show2").click(function(){
+    $("#myDIV2").show();
+    $("#myDIV").hide();
+    $("#myDIV5").hide();
+    $("#myDIV3").hide();
+    $("k8s_audit_stages").hide(); 
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide();
+        $("#myDIV6").hide();
+        $("#myDIV7").hide();
+        $("#myDIV8").hide();          
+  });
+
+  $("#show3").click(function(){
+    $("#myDIV3").show();
+    $("#myDIV2").hide();
+    $("#myDIV5").hide();
+    $("#myDIV").hide();
+    $("k8s_audit_stages").hide(); 
+    $("#myDIV4").hide(); 
+    $("service_with_external_IP").hide();
+    $("#myDIV6").hide(); 
+    $("#myDIV7").hide();
+    $("#myDIV8").hide();            
+  });
+
+    $("#show5").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").hide();    
+    $("#myDIV5").show();
+    $("#myDIV6").hide(); 
+    $("#myDIV7").hide();
+    $("#myDIV8").hide();              
+  });
+
+    $("#show4").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").show();    
+    $("#myDIV5").hide();
+    $("#myDIV6").hide(); 
+    $("#myDIV7").hide();
+    $("#myDIV8").hide();              
+  });
+
+      $("#show6").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").hide();    
+    $("#myDIV5").hide();
+    $("#myDIV6").show(); 
+    $("#myDIV7").hide();
+    $("#myDIV8").hide();              
+  });
+
+      $("#show7").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").hide();    
+    $("#myDIV5").hide();
+    $("#myDIV6").hide();  
+    $("#myDIV7").show();
+    $("#myDIV8").hide();             
+  }); 
+
+      $("#show8").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").hide();    
+    $("#myDIV5").hide();
+    $("#myDIV6").hide();  
+    $("#myDIV8").show();
+    $("#myDIV7").hide();             
+  });      
+
+    $("#k8s_audit_stages").click(function(){
+    $("#myDIV").hide();
+    $("#myDIV2").hide();
+    $("#myDIV3").hide();
+    $("#myDIV4").show();    
+    $("#myDIV5").hide(); 
+    $("#myDIV6").hide(); 
+    $("#myDIV7").hide();
+    $("#myDIV8").hide();     
+  });
+
+
+});
+</script>
+
+<link rel="stylesheet" href="stylesheet.css">
+
+</head>
+<body>
+
+<!--<div class="icon-bar">
+  <a class="active" href="#"><i class="fa fa-home"></i></a> 
+  <a href="#"><i class="fa fa-search"></i></a> 
+  <a href="#"><i class="fa fa-envelope"></i></a> 
+  <a href="#"><i class="fa fa-globe"></i></a>
+  <a href="#"><i class="fa fa-trash"></i></a> 
+</div>-->
+
+<!-- Toolbar -->
+<div class="icon-bar">
+  <a class="active" href="index.html"><i class="fa fa-home"></i></a> 
+  <h1>Write below RPM database</h1>
+</div>
+
+<br/>
+<br/>
+
+<!--<div style="text-align: left;"><a href="index.html"><img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png" width="50" alt="My Image" /></a></div>
+<center><h2>Detect outbound connections to common miner pool ports</h2></center>-->
+
+<div id="parentDiv">
+
+<div id="div1">
+    <p id="category">Rules:</p>
+
+<div id="clipboard">
+<pre>
+  <code>
+- <b>rule:</b> Write below rpm database
+  <br/><br/>
+  &nbsp;&nbsp;<b>desc:</b> an attempt to write to the rpm database by any non-rpm related program
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;fd.name <a id="bool">startswith</a> /var/lib/rpm <a id="bool">and</a> <a id="show1">open_write</a><br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and not</a> <a id="show2">rpm_procs</a> <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and not</a> <a id="show3">ansible_running_python</a> <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and not</a> <a id="show4">python_running_chef</a> <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and not</a> <a id="show5">exe_running_docker_save</a> <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and not</a> <a id="show6">amazon_linux_running_python_yum</a> <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and not</a> <a id="show7">user_known_write_rpm_database_activities</a>    
+  <br/><br/>
+  &nbsp;&nbsp;<b>output:</b> "Rpm database opened for writing by a non-rpm program (command=%proc.cmdline 
+  &nbsp;&nbsp;&nbsp;pid=%proc.pid file=%fd.name parent=%proc.pname pcmdline=%proc.pcmdline 
+  &nbsp;&nbsp;&nbsp;container_id=%container.id image=%container.image.repository)"
+  <br/><br/>
+  &nbsp;&nbsp;<b>priority:</b> ERROR
+  <br/><br/>
+  &nbsp;&nbsp;<b>tags:</b> [filesystem, software_mgmt, mitre_persistence]
+  </code>
+</pre>
+</div>
+
+<!-- Button to copy source code -->
+<center><div class="tooltip">
+<button onclick="copyToClip(document.getElementById('clipboard').innerHTML)" onmouseout="outFunc()">Copy Rule
+<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+</button>
+</div></center>
+
+</div>
+
+
+
+<!-- First Macro -->
+<div id="myDIV">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> open_write
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (open,openat,openat2) <a id="bool">and</a> evt.is_open_write=true <a id="bool">and</a> 
+  &nbsp;&nbsp;&nbsp;fd.typechar='f' <a id="bool">and</a> fd.num>=0)
+  </code>
+</pre>
+</div>
+
+<!-- Second Macro -->
+<div id="myDIV2">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> rpm_procs
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (rpm_binaries, openscap_rpm_binaries) <a id="bool">or</a> proc.name <a id="bool">in</a> <br/>
+  &nbsp;&nbsp;&nbsp;(salt-minion))
+  </code>
+</pre>
+</div>
+
+<!-- Third Macro -->
+<div id="myDIV3">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> ansible_running_python
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (python, pypy, python3) <a id="bool">and</a> proc.cmdline <a id="bool">contains</a> ansible)
+  </code>
+</pre>
+</div>
+
+<!-- K8s Audit Macro -->
+<div id="myDIV4">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> python_running_chef
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> (proc.name=python <a id="bool">and</a> (proc.cmdline <a id="bool">contains</a> yum-dump.py <a id="bool">or</a> 
+  &nbsp;&nbsp;&nbsp;proc.cmdline="python /usr/bin/chef-monitor.py"))
+  </code>
+</pre>
+</div>
+
+<!-- Miner Ports Macro -->
+<div id="myDIV5">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> exe_running_docker_save
+  <br/><br/>
+  &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;proc.name = "exe" <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> (proc.cmdline <a id="bool">contains</a> "/var/lib/docker" <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">or</a> proc.cmdline <a id="bool">contains</a> "/var/run/docker") <br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> proc.pname <a id="bool">in</a> (dockerd, docker, dockerd-current, docker-current)  
+  </code>
+</pre>
+</div>
+
+<!-- Miner Domains Macro -->
+<div id="myDIV6">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> exe_running_docker_save
+<br/><br/>
+ &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;proc.name = "exe"<br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> (proc.cmdline <a id="bool">contains</a> "/var/lib/docker"<br/>
+  &nbsp;&nbsp;&nbsp;"eth-cn.dwarfpool.com","eth-cn2.dwarfpool.com","eth-eu.dwarfpool.com"<br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">or</a> proc.cmdline <a id="bool">contains</a> "/var/run/docker")<br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">an</a> proc.pname <a id="bool">in</a> (dockerd, docker, dockerd-current, docker-current)<br/>
+  </code>
+</pre>
+</div>
+
+<!-- Div7 -->
+<div id="myDIV7">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> user_known_shell_config_modifiers
+<br/><br/>
+ &nbsp;&nbsp;<b>condition:</b> (<a id="show8">never_true</a>)
+  </code>
+</pre>
+</div>
+
+<!-- Div8 -->
+<div id="myDIV8">
+    <p id="category">Macro:</p>
+<pre>
+  <code>
+- <b>macro:</b> never_true
+<br/><br/>
+ &nbsp;&nbsp;<b>condition:</b> (evt.num=0)
+  </code>
+</pre>
+</div>
+
+
+</div>
+</div>
+
+<div id="details">
+<b><p class="small">How to Enable</p></b>
+<p class="small">This rule is <a id="bool2">ENABLED</a> by default<br/>
+<hr>
+<b><p class="small">Description</p></b>
+<p class="small">To configure Bash to use our custom settings we need to configure various configuration files that are used. Some of these files are only executed at "login", others are executed each time a new instance of your Bash shell is started. Some of Bash's configuration files are "System Wide", meaning they will apply to all users of Bash. Many are local and reside in your "/homed/directory/". These local configuration files will only apply to that particular user! </p>
+<hr>
+<b><p class="small">Known Threat</p></b>
+<p class="small">The detection of this Shellbot malware and other generic ones can be done using Falco in order to spot suspicious connections or malicious binary downloads and executions. <br/>
+  Check out the below Sysdig Blog for more context. <br/>
+<a href="https://sysdig.com/blog/malware-analysis-shellbot-sysdig/#:~:text=Modify%20Shell%20Configuration%20File"> Link to Blog </a>
+<br/>
+<br/>
+</div>  
+
+<script>
+function copyToClip(str) {
+  function listener(e) {
+    e.clipboardData.setData("text/html", str);
+    e.clipboardData.setData("text/plain", str);
+    e.preventDefault();
+  }
+  document.addEventListener("copy", listener);
+  document.execCommand("copy");
+  document.removeEventListener("copy", listener);
+};
+
+var tooltip = document.getElementById("myTooltip");
+tooltip.innerHTML = "Copied: " + copyText.value;
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
+</script>
+
+</body>
+</html>

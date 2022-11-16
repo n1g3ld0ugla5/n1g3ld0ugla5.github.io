@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Falco Rules Library</title>
+<link rel="shortcut icon" href="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png">
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+<style>
+
+
+* {
+  box-sizing: border-box;
+}
+
+mark {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 6px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  text-align:center;
+  background-color: #FFFFE0;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#myUL li a:hover:not(.header) { background-color: #eee; }
+mark.cve { color:black; font-weight: bold; float:right; border-radius: 12px; background-color: #89CFF0;}
+mark.tags { color:white;  float: right; border-radius: 12px; font-weight: bold;}
+mark.segment { color:black; font-weight: bold;  float: right; border-radius: 12px; background-color: orange;}
+mark.custom { color:black;  float: right; border-radius: 12px; background-color: #F4EA56; font-weight: bold;}
+mark.err { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #CF9FFF}
+mark.aws { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #FFB6C1;}
+mark.okta { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #FFB6C1;}
+mark.github { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #FFB6C1;}
+#heading { width: 100%; height: 10%; margin-bottom: 1%; font-weight: bold;}
+#title-img {width: 100%; font-size:1.7vw; margin-top: 1%; margin-bottom: : 1%; font-family: Arial, Helvetica, sans-serif; text-align: center; padding: 8px;}
+/*#title-txt {width: 50%; margin-top: 25px; font-size:1.5vw; text-align: center; margin-top: 1%;}*/
+h2.ex1 {
+  margin-top: 25px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="heading">
+<div id="title-img"><img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.png" width="60" alt="My Image" /> Falco ERC (Educational Rules Center)</div>
+
+<!--<div id="title-txt">Search Falco Rules</div>-->
+</div>
+
+<!--
+<script type='text/javascript'>
+document.onreadystatechange = function () {
+  if (document.readyState === "interactive") {
+    document.body.innerHTML = '<h4><code>Total Falco Rules:</code> '+document.getElementById("myUL").getElementsByTagName("li").length +' Rules</h4>';
+  }
+}
+</script> 
+-->
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Falco Rules, CVE's, Tags, Priority etc.." title="Type in a name">
+
+<ul id="myUL">
+  <li><a href="schedule-cron-jobs.html">Schedule Cron Jobs
+    <mark class="err">NOTICE</mark>
+    <mark class="cve">CVE-2021-3156</mark> 
+    <mark class="tags">file</mark>
+    <mark class="tags">mitre_persistence</mark>
+  </a></li>  
+  <li><a href="stdout-in.html">Redirect STDOUT/STDIN to Network Connection in Container
+     <mark class="err">NOTICE</mark>   
+     <mark class="okta">Reverse Shell</mark> 
+     <mark class="okta">Log4Shell</mark>          
+  </a></li>   
+
+  <li><a href="disallowed-ssh.html">Disallowed SSH Connection
+    <mark class="err">NOTICE</mark>
+    <mark class="tags">network</mark>
+    <mark class="tags">mitre_remote_service</mark>
+
+  </a></li> 
+
+  <li><a href="read-shell-config.html">Read Shell Configuration File
+    <mark class="err">WARNING</mark>
+    <mark class="tags">file</mark>
+    <mark class="tags">mitre_discovery</mark>
+  </a></li> 
+
+  <li><a href="okta-pw-change.html">User Changing password in to OKTA
+    <mark class="err">NOTICE</mark>
+    <mark class="okta">okta</mark>
+  </a></li>  
+
+  <li><a href="modify-shell-config.html">Modify Shell Configuration File
+    <mark class="err">WARNING</mark>
+    <mark class="tags">file</mark>
+    <mark class="tags">mitre_persistence</mark>
+  </a></li>
+
+  <li><a href="polkit-priv.html">Polkit Local Privilege Escalation Vulnerability
+    <mark class="err">CRITICAL</mark>
+    <mark class="cve">CVE-2021-4034</mark> 
+    <mark class="tags">process</mark>
+    <mark class="tags">mitre_privilege_escalation</mark>
+  </a></li> 
+
+  <li><a href="below-rpm-db.html">Write below rpm database
+    <mark class="err">ERROR</mark>  
+    <mark class="tags">filesystem</mark> 
+    <mark class="tags">software_mgmt</mark>      
+    <mark class="tags">mitre_persistence</mark>            
+  </a></li>
+
+  <li><a href="aws-mfa-login.html">Console Login Without MFA
+    <mark class="err">CRITICAL</mark>
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_console</mark>
+    <mark class="tags">aws_iam</mark> 
+  </a></li>
+
+  <li><a href="potential-privilege.html">Sudo Potential Privilege Escalation 
+    <mark class="err">CRITICAL</mark>
+    <mark class="cve">CVE-2021-3156</mark> 
+    <mark class="tags">filesystem</mark>
+    <mark class="tags">mitre_privilege_escalation</mark>
+  </a></li>   
+
+  <li><a href="#">Unexpected inbound connection source
+    <mark class="err">NOTICE</mark>
+    <mark class="tags">network</mark>
+  </a></li> 
+
+  <li><a href="cryptomining.html">Detect outbound connections to common miner pool ports 
+    <mark class="err">CRITICAL</mark>
+    <mark class="segment">Cryptomining</mark>
+    <mark class="tags">network</mark>
+    <mark class="tags">mitre_execution</mark>    
+  </a></li>
+
+  <li><a href="#">Worm-like propagation of Sysrv-hello crypto-jacking botnet 
+    <mark class="err">CRITICAL</mark>
+    <mark class="cve">CVE-2017-5638</mark>
+    <mark class="segment">Cryptomining</mark>
+  </a></li>
+  
+  <li><a href="packet-socket.html">Packet socket created in container 
+    <mark class="err">NOTICE</mark>    
+    <mark class="cve">CVE-2020-14386</mark> 
+    <mark class="tags">network</mark>
+    <mark class="tags">mitre_discovery</mark>    
+  </a></li>   
+
+  <li><a href="net-conn-outside-sub.html">Network Connection outside Local Subnet
+    <mark class="err">WARNING</mark>    
+    <mark class="tags">network</mark>    
+  </a></li> 
+
+  <li><a href="github-mining.html">Github action with miners 
+    <mark class="err">CRITICAL</mark>    
+    <mark class="segment">Cryptomining</mark>
+    <mark class="github">GitHub</mark>    
+  </a></li>  
+
+  <li><a href="#">Outbound Connection to C2 Servers
+    <mark class="tags">network</mark>      
+  </a></li>
+
+  <li><a href="#">Java Process Class File Download
+    <mark class="tags">mitre_initial_access</mark>
+    <mark class="okta">Log4Shell</mark>           
+  </a></li>     
+
+  <li><a href="stratum.html">Detect crypto miners using the Stratum protocol
+    <mark class="err">CRITICAL</mark>   
+    <mark class="segment">Cryptomining</mark> 
+    <mark class="tags">process</mark> 
+    <mark class="tags">mitre_execution</mark>         
+  </a></li>  
+
+  <li><a href="service-with-external-ip.html">Create/Update ClusterIP Service with External IP
+    <mark class="cve">CVE-2020-8554</mark>
+    <mark class="custom">CUSTOM</mark>     
+  </a></li> 
+
+  <li><a href="java-network-read.html">Java Process Class File Download
+    <mark class="cve">CVE-2021-44228</mark>
+    <mark class="tags">mitre_initial_access</mark>     
+  </a></li>  
+
+
+  <li><a href="#">Linux Kernel Module Injection Detected
+    <mark class="tags">process</mark>  
+  </a></li>
+
+  <li><a href="#">The docker client is executed in a container
+    <mark class="tags">container</mark>    
+    <mark class="tags">mitre_execution</mark>     
+  </a></li>  
+ 
+  <li><a href="#">Outbound or Inbound Traffic not to Authorized Server Process and Port
+    <mark class="tags">network</mark>         
+  </a></li> 
+
+  <li><a href="#">Container Drift Detected (chmod)
+    <mark class="err">ERROR</mark>
+  </a></li> 
+  <li><a href="drift-err.html">Container Drift Detected (open+create)
+    <mark class="err">ERROR</mark>   
+  </a></li>
+
+  <li><a href="#">Write below binary dir
+    <mark class="err">ERROR</mark>  
+    <mark class="tags">filesystem</mark>   
+    <mark class="tags">mitre_persistence</mark>            
+  </a></li>
+
+  <li><a href="#">Write below monitored dir
+    <mark class="err">ERROR</mark>  
+    <mark class="tags">filesystem</mark>   
+    <mark class="tags">mitre_persistence</mark>            
+  </a></li>  
+
+  <li><a href="#">Read ssh information
+    <mark class="err">ERROR</mark>  
+    <mark class="tags">filesystem</mark>   
+    <mark class="tags">mitre_discovery</mark>            
+  </a></li> 
+
+  <li><a href="#">Write below etc
+    <mark class="err">ERROR</mark>  
+    <mark class="tags">filesystem</mark>   
+    <mark class="tags">mitre_persistence</mark>            
+  </a></li>  
+
+  <li><a href="#">Write below root
+    <mark class="err">ERROR</mark>  
+    <mark class="tags">filesystem</mark>   
+    <mark class="tags">mitre_persistence</mark>            
+  </a></li>       
+
+  <li><a href="#">Modify binary dirs
+    <mark class="err">ERROR</mark>  
+    <mark class="tags">filesystem</mark>    
+    <mark class="tags">mitre_persistence</mark>            
+  </a></li>  
+
+  <li><a href="#">Unexpected outbound connection destination
+    <mark class="tags">network</mark>
+  </a></li>  
+
+  <!-- GitHub -->
+  <!-- https://github.com/falcosecurity/plugins/blob/master/plugins/github/rules/github.yaml --> 
+  <li><a href="#">Webhook Connected
+    <mark class="github">GitHub</mark> 
+  </a></li> 
+  <li><a href="#">Webhook Disconnected
+    <mark class="github">GitHub</mark> 
+  </a></li> 
+  <li><a href="#">Private Repository Becoming Public
+    <mark class="github">GitHub</mark> 
+  </a></li> 
+  <li><a href="#">Public Repository Becoming Private
+    <mark class="github">GitHub</mark>
+  </a></li> 
+  <li><a href="#">Create Public Repository
+    <mark class="github">GitHub</mark>
+  </a></li> 
+  <li><a href="#">Delete Public Repository
+    <mark class="github">GitHub</mark>
+  </a></li> 
+  <li><a href="#">Create Repository
+    <mark class="github">GitHub</mark>
+  </a></li> 
+  <li><a href="#">Delete Repository
+    <mark class="github">GitHub</mark>
+  </a></li>        
+  <li><a href="#">Create Deploy Key
+    <mark class="github">GitHub</mark>
+  </a></li> 
+  <li><a href="#">Delete Deploy Key
+    <mark class="github">GitHub</mark>
+  </a></li>         
+  <li><a href="#">Add Collaborator to Repository
+    <mark class="github">GitHub</mark>
+  </a></li> 
+  <li><a href="#">Remove Collaborator from Repository
+    <mark class="github">GitHub</mark>
+  </a></li>  
+  <li><a href="#">Secret pushed into a public repository
+    <mark class="github">GitHub</mark>
+  </a></li> 
+  <li><a href="#">Secret pushed into a private repository
+    <mark class="github">GitHub</mark>
+  </a></li>
+
+  <!-- AWS -->
+  <!-- https://github.com/falcosecurity/plugins/blob/master/plugins/cloudtrail/rules/aws_cloudtrail_rules.yaml -->
+  <li><a href="#">All Cloudtrail Events
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>       
+  </a></li>   
+  <li><a href="#">Console Login Through Assume Role
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_console</mark>
+    <mark class="tags">aws_iam</mark>             
+  </a></li>  
+  <li><a href="#">Deactivate MFA for Root User
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_iam</mark> 
+  </a></li> 
+  <li><a href="#">Create AWS user
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_iam</mark> 
+  </a></li>   
+  <li><a href="#">Create Group
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_iam</mark> 
+  </a></li> 
+  <li><a href="#">Delete Group
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_iam</mark> 
+  </a></li> 
+  <li><a href="#">ECS Service Created
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_ecs</mark>
+    <mark class="tags">aws_fargate</mark>      
+  </a></li> 
+  <li><a href="#">ECS Task Run or Started
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_ecs</mark>
+    <mark class="tags">aws_fargate</mark>  
+  </a></li> 
+  <li><a href="#">Create Lambda Function
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_lambda</mark>
+  </a></li> 
+  <li><a href="#">Update Lambda Function Code
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_lambda</mark>
+  </a></li> 
+  <li><a href="#">Update Lambda Function Configuration
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_lambda</mark>
+  </a></li> 
+  <li><a href="#">Run Instances
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_ec2</mark>
+  </a></li> 
+  <li><a href="#">Run Instances in Non-approved Region
+    <mark class="aws">AWS</mark>
+    <mark class="tags">cloud</mark>
+    <mark class="tags">aws_ec2</mark>
+  </a></li>     
+
+  <!-- Okta -->
+  <!-- https://github.com/falcosecurity/plugins/blob/master/plugins/okta/rules/okta_rules.yaml -->
+  <li><a href="#">Creating a new OKTA user account
+    <mark class="err">NOTICE</mark>    
+    <mark class="okta">okta</mark>    
+  </a></li>  
+  <li><a href="#">User accessing app via single sign on OKTA
+    <mark class="err">NOTICE</mark>    
+    <mark class="okta">okta</mark>  
+  </a></li>  
+  <li><a href="#">User has been locked out in OKTA
+    <mark class="err">NOTICE</mark>     
+    <mark class="okta">okta</mark>  
+  </a></li>  
+  <li><a href="#">User has been moved from suspended status in OKTA
+    <mark class="okta">okta</mark>  
+  </a></li>         
+  <li><a href="#">User has been activated in OKTA
+    <mark class="okta">okta</mark>  
+  </a></li>  
+  <li><a href="#">User has been deactivated in OKTA
+    <mark class="okta">okta</mark>  
+  </a></li> 
+  <li><a href="#">User has been suspended in OKTA
+    <mark class="okta">okta</mark>  
+  </a></li>  
+  <li><a href="#">Admin permission has been assigned to a user in OKTA
+    <mark class="okta">okta</mark>  
+  </a></li> 
+  <li><a href="#">Creating a new OKTA API token
+    <mark class="okta">okta</mark>  
+  </a></li> 
+  <li><a href="#">User accessing OKTA admin section
+    <mark class="okta">okta</mark>  
+  </a></li>   
+  <li><a href="#">Adding user in OKTA group
+    <mark class="okta">okta</mark>  
+  </a></li> 
+  <li><a href="#">removing MFA factor from user in OKTA
+    <mark class="okta">okta</mark>  
+  </a></li>
+
+</ul>
+
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+
+
+</body>
+</html>
