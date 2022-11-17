@@ -133,7 +133,7 @@ $(document).ready(function(){
 <!-- Toolbar -->
 <div class="icon-bar">
   <a class="active" href="index.html"><i class="fa fa-home"></i></a> 
-  <h1>Console Login Without MFA</h1>
+  <h1>The docker client is executed in a container</h1>
 </div>
 
 <br/>
@@ -147,32 +147,23 @@ $(document).ready(function(){
 <div id="div1">
     <p id="category">Rules:</p>
 
-<div id="clipboard">
+
 <pre>
   <code>
-- <b>rule:</b> Console Login Without MFA
+- <b>rule:</b> The docker client is executed in a container
   <br/><br/>
-  &nbsp;&nbsp;<b>desc:</b> Detect a console login without MFA.
+  &nbsp;&nbsp;<b>desc:</b> Detect a k8s client tool executed inside a container
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b><br/>
-  &nbsp;&nbsp;&nbsp;ct.name="ConsoleLogin"<a id="bool">and not</a> ct.error <a id="bool">exists</a> <br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> ct.user.identitytype!="AssumedRole"<br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> json.value[/responseElements/ConsoleLogin]="Success" <br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> json.value[/additionalEventData/MFAUsed]="No"   
+  &nbsp;&nbsp;<b>condition:</b> <a id="show1">spawned_process</a> <a id="bool">and</a> container <a id="bool">and not</a> <a id="show2">user_known_k8s_client_container_parens</a> 
+  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> proc.name in (<a id="show3">k8s_client_binaries</a>)  
   <br/><br/>
-  &nbsp;&nbsp;<b>output:</b><br/>
-  &nbsp;&nbsp;&nbsp;Detected a console login without MFA <br/>
-  &nbsp;&nbsp;&nbsp;(requesting user=%ct.user, <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;requesting IP=%ct.srcip, <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;AWS region=%ct.region)
+  &nbsp;&nbsp;<b>output:</b> "Docker or kubernetes client executed in container (user=%user.name 
+  &nbsp;&nbsp;&nbsp;user_loginuid=%user.loginuid %container.info parent=%proc.pname cmdline=%proc.cmdline 
+  &nbsp;&nbsp;&nbsp;pid=%proc.pid image=%container.image.repository:%container.image.tag)"
   <br/><br/>
-  &nbsp;&nbsp;<b>priority:</b> CRITICAL
+  &nbsp;&nbsp;<b>priority:</b> WARNING
   <br/><br/>
-  &nbsp;&nbsp;<b>tags:</b> <br/>    
-  &nbsp;&nbsp;- cloud <br/> 
-  &nbsp;&nbsp;- aws <br/> 
-  &nbsp;&nbsp;- aws_console <br/> 
-  &nbsp;&nbsp;- aws_iam
+  &nbsp;&nbsp;<b>tags:</b> [container, mitre_execution]
   </code>
 </pre>
 </div>
@@ -193,10 +184,9 @@ $(document).ready(function(){
     <p id="category">Macro:</p>
 <pre>
   <code>
-- <b>macro:</b> open_write
+- <b>macro:</b> spawned_process
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (open,openat,openat2) <a id="bool">and</a> evt.is_open_write=true <a id="bool">and</a> 
-  &nbsp;&nbsp;&nbsp;fd.typechar='f' <a id="bool">and</a> fd.num>=0)
+  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (execve, execveat) <a id="bool">and</a> evt.dir=<)
   </code>
 </pre>
 </div>
@@ -206,22 +196,21 @@ $(document).ready(function(){
     <p id="category">Macro:</p>
 <pre>
   <code>
-- <b>macro:</b> rpm_procs
+- <b>macro:</b> user_known_k8s_client_container_parens
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (rpm_binaries, openscap_rpm_binaries) <a id="bool">or</a> proc.name <a id="bool">in</a> <br/>
-  &nbsp;&nbsp;&nbsp;(salt-minion))
+  &nbsp;&nbsp;<b>condition:</b> (<a id="show4">user_known_k8s_client_container</a>)
   </code>
 </pre>
 </div>
 
 <!-- Third Macro -->
 <div id="myDIV3">
-    <p id="category">Macro:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> ansible_running_python
+- <b>list:</b> k8s_client_binaries
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (python, pypy, python3) <a id="bool">and</a> proc.cmdline <a id="bool">contains</a> ansible)
+  &nbsp;&nbsp;<b>items:</b> [docker, kubectl, crictl]
   </code>
 </pre>
 </div>
@@ -231,10 +220,12 @@ $(document).ready(function(){
     <p id="category">Macro:</p>
 <pre>
   <code>
-- <b>macro:</b> python_running_chef
+- <b>macro:</b> user_known_k8s_client_container
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name=python <a id="bool">and</a> (proc.cmdline <a id="bool">contains</a> yum-dump.py <a id="bool">or</a> 
-  &nbsp;&nbsp;&nbsp;proc.cmdline="python /usr/bin/chef-monitor.py"))
+  &nbsp;&nbsp;<b>condition:</b> > <br/> 
+  &nbsp;&nbsp;&nbsp;(k8s.ns.name="kube-system" <a id="bool">and</a> container.image.repository <a id="bool">in</a> 
+  &nbsp;&nbsp;&nbsp;(<a id="show5">user_known_k8s_ns_kube_system_images</a>)) <a id="bool">or</a> container.image.repository <a id="bool">in</a>
+  &nbsp;&nbsp;&nbsp;(<a id="show6">user_known_k8s_images</a>)
   </code>
 </pre>
 </div>

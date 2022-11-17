@@ -79,6 +79,7 @@ h1 { font-size:1.5vw; color: white; text-align: center; font-weight: normal; mar
   display: inline-block;
 }
 
+#grey {text-decoration-color: grey;}
 
 .tooltip .tooltiptext {
   visibility: hidden;

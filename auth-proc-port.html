@@ -133,7 +133,7 @@ $(document).ready(function(){
 <!-- Toolbar -->
 <div class="icon-bar">
   <a class="active" href="index.html"><i class="fa fa-home"></i></a> 
-  <h1>Console Login Without MFA</h1>
+  <h1>Outbound or Inbound Traffic not to Authorized Server Process and Port</h1>
 </div>
 
 <br/>
@@ -147,32 +147,31 @@ $(document).ready(function(){
 <div id="div1">
     <p id="category">Rules:</p>
 
-<div id="clipboard">
+
 <pre>
   <code>
-- <b>rule:</b> Console Login Without MFA
+- <b>rule:</b> Outbound or Inbound Traffic not to Authorized Server Process and Port
   <br/><br/>
-  &nbsp;&nbsp;<b>desc:</b> Detect a console login without MFA.
+  &nbsp;&nbsp;<b>desc:</b> Detect traffic that is not to authorized server process and port.
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b><br/>
-  &nbsp;&nbsp;&nbsp;ct.name="ConsoleLogin"<a id="bool">and not</a> ct.error <a id="bool">exists</a> <br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> ct.user.identitytype!="AssumedRole"<br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> json.value[/responseElements/ConsoleLogin]="Success" <br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> json.value[/additionalEventData/MFAUsed]="No"   
+  &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;<a id="show1">inbound_outbound</a> <a id="bool">and</a><br/>
+  &nbsp;&nbsp;&nbsp;container <a id="bool">and</a><br/>
+  &nbsp;&nbsp;&nbsp;container.image.repository <a id="bool">in</a> (<a id="show2">allowed_image</a>) <a id="bool">and</a><br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">not</a> proc.name <a id="bool">in</a> (<a id="show3">authorized_server_binary</a>) <a id="bool">and</a><br/>
+  &nbsp;&nbsp;&nbsp;<a id="bool">not</a> fd.sport <a id="bool">in</a> (<a id="show4">authorized_server_port</a>)     
   <br/><br/>
-  &nbsp;&nbsp;<b>output:</b><br/>
-  &nbsp;&nbsp;&nbsp;Detected a console login without MFA <br/>
-  &nbsp;&nbsp;&nbsp;(requesting user=%ct.user, <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;requesting IP=%ct.srcip, <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;AWS region=%ct.region)
+  &nbsp;&nbsp;<b>enabled:</b> false
+  <br/><br/>  
+  &nbsp;&nbsp;<b>output:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;Network connection outside authorized port and binary <br/> 
+  &nbsp;&nbsp;&nbsp;(command=%proc.cmdline pid=%proc.pid connection=%fd.name user=%user.name 
+  &nbsp;&nbsp;&nbsp;user_loginuid=%user.loginuid container_id=%container.id 
+  &nbsp;&nbsp;&nbsp;image=%container.image.repository)
   <br/><br/>
-  &nbsp;&nbsp;<b>priority:</b> CRITICAL
+  &nbsp;&nbsp;<b>priority:</b> WARNING
   <br/><br/>
-  &nbsp;&nbsp;<b>tags:</b> <br/>    
-  &nbsp;&nbsp;- cloud <br/> 
-  &nbsp;&nbsp;- aws <br/> 
-  &nbsp;&nbsp;- aws_console <br/> 
-  &nbsp;&nbsp;- aws_iam
+  &nbsp;&nbsp;<b>tags:</b> [network]
   </code>
 </pre>
 </div>
@@ -193,48 +192,50 @@ $(document).ready(function(){
     <p id="category">Macro:</p>
 <pre>
   <code>
-- <b>macro:</b> open_write
+- <b>macro:</b> inbound_outbound
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (open,openat,openat2) <a id="bool">and</a> evt.is_open_write=true <a id="bool">and</a> 
-  &nbsp;&nbsp;&nbsp;fd.typechar='f' <a id="bool">and</a> fd.num>=0)
+  &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;((((evt.type <a id="bool">in</a> (accept,listen,connect) <a id="bool">and</a> evt.dir=<)) <a id="bool">and</a> <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;(fd.typechar = 4 or fd.typechar = 6)) <a id="bool">and</a> <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;(fd.ip != "0.0.0.0" <a id="bool">and</a> fd.net != "127.0.0.0/8") <a id="bool">and</a> <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;(evt.rawres >= 0 <a id="bool">or</a> evt.res = EINPROGRESS))    
   </code>
 </pre>
 </div>
 
 <!-- Second Macro -->
 <div id="myDIV2">
-    <p id="category">Macro:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> rpm_procs
+- <b>list:</b> allowed_image
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (rpm_binaries, openscap_rpm_binaries) <a id="bool">or</a> proc.name <a id="bool">in</a> <br/>
-  &nbsp;&nbsp;&nbsp;(salt-minion))
+  &nbsp;&nbsp;<b>items:</b> [] # add image to monitor, i.e.: bitnami/nginx
+
   </code>
 </pre>
 </div>
 
 <!-- Third Macro -->
 <div id="myDIV3">
-    <p id="category">Macro:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> ansible_running_python
+- <b>list:</b> authorized_server_binary
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (python, pypy, python3) <a id="bool">and</a> proc.cmdline <a id="bool">contains</a> ansible)
+  &nbsp;&nbsp;<b>items:</b> <--->
   </code>
 </pre>
 </div>
 
 <!-- K8s Audit Macro -->
 <div id="myDIV4">
-    <p id="category">Macro:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> python_running_chef
+- <b>list:</b> authorized_server_port
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name=python <a id="bool">and</a> (proc.cmdline <a id="bool">contains</a> yum-dump.py <a id="bool">or</a> 
-  &nbsp;&nbsp;&nbsp;proc.cmdline="python /usr/bin/chef-monitor.py"))
+  &nbsp;&nbsp;<b>items:</b> [] # add port to allow, i.e.: 80
   </code>
 </pre>
 </div>

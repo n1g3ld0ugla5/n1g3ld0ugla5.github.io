@@ -133,7 +133,7 @@ $(document).ready(function(){
 <!-- Toolbar -->
 <div class="icon-bar">
   <a class="active" href="index.html"><i class="fa fa-home"></i></a> 
-  <h1>Console Login Without MFA</h1>
+  <h1>Java Process Class File Download</h1>
 </div>
 
 <br/>
@@ -150,41 +150,36 @@ $(document).ready(function(){
 <div id="clipboard">
 <pre>
   <code>
-- <b>rule:</b> Console Login Without MFA
+- <b>rule:</b> Java Process Class File Download
   <br/><br/>
-  &nbsp;&nbsp;<b>desc:</b> Detect a console login without MFA.
+  &nbsp;&nbsp;<b>desc:</b> Detected Java process downloading a class file which could indicate a successful 
+  &nbsp;&nbsp;&nbsp;exploit of the log4shell Log4j vulnerability (CVE-2021-44228)
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b><br/>
-  &nbsp;&nbsp;&nbsp;ct.name="ConsoleLogin"<a id="bool">and not</a> ct.error <a id="bool">exists</a> <br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> ct.user.identitytype!="AssumedRole"<br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> json.value[/responseElements/ConsoleLogin]="Success" <br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> json.value[/additionalEventData/MFAUsed]="No"   
+  &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;<a id="show1">java_network_read <a id="bool">and</a> evt.buffer <a id="bool">bcontains</a> cafebabe</a>  
   <br/><br/>
-  &nbsp;&nbsp;<b>output:</b><br/>
-  &nbsp;&nbsp;&nbsp;Detected a console login without MFA <br/>
-  &nbsp;&nbsp;&nbsp;(requesting user=%ct.user, <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;requesting IP=%ct.srcip, <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;AWS region=%ct.region)
+  &nbsp;&nbsp;<b>output:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;Java process class file download (user=%user.name user_loginname=%user.loginname 
+  &nbsp;&nbsp;&nbsp;user_loginuid=%user.loginuid event=%evt.type connection=%fd.name server_ip=%fd.sip 
+  &nbsp;&nbsp;&nbsp;server_port=%fd.sport proto=%fd.l4proto process=%proc.name command=%proc.cmdline 
+  &nbsp;&nbsp;&nbsp;pid=%proc.pid parent=%proc.pname buffer=%evt.buffer container_id=%container.id 
+  &nbsp;&nbsp;&nbsp;image=%container.image.repository) 
   <br/><br/>
   &nbsp;&nbsp;<b>priority:</b> CRITICAL
   <br/><br/>
-  &nbsp;&nbsp;<b>tags:</b> <br/>    
-  &nbsp;&nbsp;- cloud <br/> 
-  &nbsp;&nbsp;- aws <br/> 
-  &nbsp;&nbsp;- aws_console <br/> 
-  &nbsp;&nbsp;- aws_iam
+  &nbsp;&nbsp;<b>tags:</b> [mitre_initial_access]
   </code>
 </pre>
 </div>
 
 <!-- Button to copy source code -->
-<!--<center><div class="tooltip">
+<center><div class="tooltip">
 <button onclick="copyToClip(document.getElementById('clipboard').innerHTML)" onmouseout="outFunc()">Copy Rule
 <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
 </button>
 </div></center>
 
-</div>-->
+</div>
 
 
 
@@ -193,10 +188,9 @@ $(document).ready(function(){
     <p id="category">Macro:</p>
 <pre>
   <code>
-- <b>macro:</b> open_write
+- <b>macro:</b> java_network_read
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (open,openat,openat2) <a id="bool">and</a> evt.is_open_write=true <a id="bool">and</a> 
-  &nbsp;&nbsp;&nbsp;fd.typechar='f' <a id="bool">and</a> fd.num>=0)
+  &nbsp;&nbsp;<b>condition:</b> > (evt.type=recvfrom <a id="bool">and</a> fd.type <a id="bool">in</a> (ipv4, ipv6) <a id="bool">and</a> proc.name=java)
   </code>
 </pre>
 </div>
@@ -206,35 +200,36 @@ $(document).ready(function(){
     <p id="category">Macro:</p>
 <pre>
   <code>
-- <b>macro:</b> rpm_procs
+- <b>macro:</b> network_local_subnet
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (rpm_binaries, openscap_rpm_binaries) <a id="bool">or</a> proc.name <a id="bool">in</a> <br/>
-  &nbsp;&nbsp;&nbsp;(salt-minion))
+  &nbsp;&nbsp;<b>condition:</b> > <br/>
+  &nbsp;&nbsp;&nbsp;fd.rnet <a id="bool">in</a> (<a id="show3">rfc_1918_addresses</a>) <br/>
+  &nbsp;&nbsp;&nbsp;fd.ip = "0.0.0.0" or
+  &nbsp;&nbsp;&nbsp;fd.net = "127.0.0.0/8"
   </code>
 </pre>
 </div>
 
 <!-- Third Macro -->
 <div id="myDIV3">
-    <p id="category">Macro:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> ansible_running_python
+- <b>list:</b> rfc_1918_addresses
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name <a id="bool">in</a> (python, pypy, python3) <a id="bool">and</a> proc.cmdline <a id="bool">contains</a> ansible)
+  &nbsp;&nbsp;<b>items:</b> ['"10.0.0.0/8"', '"172.16.0.0/12"', '"192.168.0.0/16"']
   </code>
 </pre>
 </div>
 
 <!-- K8s Audit Macro -->
 <div id="myDIV4">
-    <p id="category">Macro:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> python_running_chef
+- <b>list:</b> namespace_scope_network_only_subnet
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (proc.name=python <a id="bool">and</a> (proc.cmdline <a id="bool">contains</a> yum-dump.py <a id="bool">or</a> 
-  &nbsp;&nbsp;&nbsp;proc.cmdline="python /usr/bin/chef-monitor.py"))
+  &nbsp;&nbsp;<b>items:</b> []
   </code>
 </pre>
 </div>
@@ -301,17 +296,15 @@ $(document).ready(function(){
 </div>
 
 <div id="details">
-<b><p class="small">How to Enable</p></b>
-<p class="small">The above Falco rules detects console logins without Multi-Factor Authentication <a id="bool2">(MFA)</a><br/>
+<b><p class="small">Rule for detecting potential Log4Shell (CVE-2021-44228) exploitation</p></b>
+<p class="small">Note: Not compatible with <a id="bool2">Java 17+</a>, which uses <a id="bool2">read()</a> syscalls by default<br/></p>
 <hr>
 <b><p class="small">Description</p></b>
-<p class="small">Another classic IAM security best practice is to set up Multi-Factor Authentication (MFA). <br/>
-MFA aims to protect you by adding an additional layer of security, making it harder for someone with malicious intentions to log in as if they were you.</p>
+<p class="small">A critical vulnerability was discovered in log4j, a widely-used open-source utility used to generate logs inside java applications. The vulnerability CVE-2021-44228, also known as Log4Shell, permits a Remote Code Execution (RCE), allowing the attackers to execute arbitrary code on the host. </p>
 <hr>
 <b><p class="small">Known Threat</p></b>
-<p class="small">If thieves need to steal both of your authentication methods, maybe they will think twice. <br/>
-Enabling MFA authentication for each user on your AWS account is a pretty good starting point. <br/>
-<a href="https://sysdig.com/blog/securing-aws-iam-with-sysdig-secure/#:~:text=Logged%20in%20without%20using%20Multi%2DFactor%20authentication"> Link to Blog </a>
+<p class="small">The log4j utility is popular and is used by a huge number of applications and companies, including the famous game Minecraft. It is also used in various Apache frameworks like Struts2, Kafka, Druid, Flink, and many commercial products. To learn more about Exploiting, Mitigating, and Detecting CVE-2021-44228, check out the Sysdig Secure blog <br/>
+<a href="https://sysdig.com/blog/exploit-detect-mitigate-log4j-cve/"> Link to Blog </a>
 <br/>
 <br/>
 </div>  

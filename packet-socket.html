@@ -117,7 +117,8 @@ $(document).ready(function(){
   &nbsp;&nbsp;&nbsp;Packet socket could be used for ARP Spoofing and privilege escalation (CVE-2020-14386) <br/> 
   &nbsp;&nbsp;&nbsp;by attacker.
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> evt.type=socket <a id="bool">and</a> evt.arg[0]=AF_PACKET <a id="bool">and</a> container <a id="bool">and not</a> proc.name <a id="bool">in</a> &nbsp;&nbsp;&nbsp;(user_known_packet_socket_binaries)
+  &nbsp;&nbsp;<b>condition:</b> evt.type=socket <a id="bool">and</a> evt.arg[0]=AF_PACKET <a id="bool">and</a> container <a id="bool">and not</a> proc.name <a id="bool">in</a> 
+  &nbsp;&nbsp;&nbsp;(<a id="show1">user_known_packet_socket_binaries</a>)
   <br/><br/>
   &nbsp;&nbsp;<b>enabled:</b> false
   <br/><br/>
@@ -135,27 +136,24 @@ $(document).ready(function(){
 
 <!-- First Macro -->
 <div id="myDIV">
-    <p id="category">Macros:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> net_miner_pool
+- <b>list:</b> trusted_images_query_miner_domain_dns
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (sendto, sendmsg, connect) <a id="bool">and</a> evt.dir=< <a id="bool">and</a> (fd.net != 
-  &nbsp;&nbsp;&nbsp;"127.0.0.0/8" <a id="bool">and not</a> fd.snet <a id="bool">in</a> (<a id="show3">rfc_1918_addresses</a>)) <a id="bool">and</a> ((minerpool_http) <a id="bool">or</a> 
-  &nbsp;&nbsp;&nbsp;(minerpool_https) <a id="bool">or</a> (<a id="show4">minerpool_other</a>)))
+  &nbsp;&nbsp;<b>condition:</b> []
   </code>
 </pre>
 </div>
 
 <!-- Second Macro -->
 <div id="myDIV2">
-    <p id="category">Macros:</p>
+    <p id="category">List:</p>
 <pre>
   <code>
-- <b>macro:</b> trusted_images_query_miner_domain_dns
+- <b>list:</b> trusted_images_query_miner_domain_dns
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (container.image.repository <a id="bool">in</a> (docker.io/falcosecurity/falco, 
-  &nbsp;&nbsp;&nbsp;falcosecurity/falco, public.ecr.aws/falcosecurity/falco))
+  &nbsp;&nbsp;<b>condition:</b> []
   </code>
 </pre>
 </div>
@@ -242,12 +240,13 @@ $(document).ready(function(){
 Change to <a id="bool2">enabled: true</a> within the Falco rule to enable it</p>  
 <hr>
 <b><p class="small">Description</p></b>
-<p class="small">A cryptocurrency mining pool is a collection of miners that work together as one entity to augment their chances of mining a block <br/>
-They share rewards among each other in proportion to the computing power contributed by them in successfully mining a block. </p>
+<p class="small"><b>CVE-2020-14386</b> - A flaw was found in the Linux kernel before 5.9-rc4. <br/>
+  Memory corruption can be exploited to gain root privileges from unprivileged processes. <br/>
+  The highest threat from this vulnerability is to data confidentiality and integrity.</p>
 <hr>
 <b><p class="small">Known Threat</p></b>
-<p class="small">The Sysdig Security Research team has identified the famous Muhstik Botnet with new behavior, attacking a Kubernetes Pod with the plan to control the Pod and mine cryptocurrency. <br/>
-<a href="https://sysdig.com/blog/muhstik-malware-botnet-analysis/"> Link to Blog </a>
+<p class="small">For more information on detecting CVE-2020-14386 with Falco and mitigating potential container escapes, check out the below Sysdig blog post: <br/>
+<a href="https://sysdig.com/blog/cve-2020-14386-falco/"> Link to Blog </a>
 <br/>
 <br/>
 </div>  

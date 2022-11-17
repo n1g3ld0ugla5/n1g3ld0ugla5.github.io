@@ -27,6 +27,40 @@ mark {
   cursor: pointer;
 }
 
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 3%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #f1f1f1;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.main {
+  padding: 16px;
+  margin-bottom: 30px;
+}
+
 #myInput {
   background-image: url('/css/searchicon.png');
   background-position: 10px 12px;
@@ -161,7 +195,11 @@ document.onreadystatechange = function () {
     <mark class="cve">CVE-2021-3156</mark> 
     <mark class="tags">filesystem</mark>
     <mark class="tags">mitre_privilege_escalation</mark>
-  </a></li>   
+  </a></li>
+
+  <li><a href="drift-err.html">Container Drift Detected (open+create)
+    <mark class="err">ERROR</mark>   
+  </a></li>       
 
   <li><a href="#">Unexpected inbound connection source
     <mark class="err">NOTICE</mark>
@@ -175,11 +213,7 @@ document.onreadystatechange = function () {
     <mark class="tags">mitre_execution</mark>    
   </a></li>
 
-  <li><a href="#">Worm-like propagation of Sysrv-hello crypto-jacking botnet 
-    <mark class="err">CRITICAL</mark>
-    <mark class="cve">CVE-2017-5638</mark>
-    <mark class="segment">Cryptomining</mark>
-  </a></li>
+
   
   <li><a href="packet-socket.html">Packet socket created in container 
     <mark class="err">NOTICE</mark>    
@@ -200,12 +234,15 @@ document.onreadystatechange = function () {
   </a></li>  
 
   <li><a href="#">Outbound Connection to C2 Servers
+    <mark class="err">WARNING</mark>     
     <mark class="tags">network</mark>      
   </a></li>
 
-  <li><a href="#">Java Process Class File Download
-    <mark class="tags">mitre_initial_access</mark>
-    <mark class="okta">Log4Shell</mark>           
+  <li><a href="java-process.html">Java Process Class File Download
+    <mark class="err">CRITICAL</mark>
+    <mark class="cve">CVE-2021-44228</mark>
+    <mark class="okta">Log4Shell</mark>          
+    <mark class="tags">mitre_initial_access</mark>           
   </a></li>     
 
   <li><a href="stratum.html">Detect crypto miners using the Stratum protocol
@@ -216,41 +253,44 @@ document.onreadystatechange = function () {
   </a></li>  
 
   <li><a href="service-with-external-ip.html">Create/Update ClusterIP Service with External IP
+    <mark class="err">WARNING</mark>
     <mark class="cve">CVE-2020-8554</mark>
     <mark class="custom">CUSTOM</mark>     
   </a></li> 
 
   <li><a href="java-network-read.html">Java Process Class File Download
+    <mark class="err">CRITICAL</mark>
     <mark class="cve">CVE-2021-44228</mark>
     <mark class="tags">mitre_initial_access</mark>     
   </a></li>  
 
-
   <li><a href="#">Linux Kernel Module Injection Detected
+    <mark class="err">WARNING</mark>     
     <mark class="tags">process</mark>  
   </a></li>
 
-  <li><a href="#">The docker client is executed in a container
+  <li><a href="docker-client.html">The docker client is executed in a container
+    <mark class="err">WARNING</mark>
     <mark class="tags">container</mark>    
     <mark class="tags">mitre_execution</mark>     
   </a></li>  
  
-  <li><a href="#">Outbound or Inbound Traffic not to Authorized Server Process and Port
+  <li><a href="auth-proc-port.html">Outbound or Inbound Traffic not to Authorized Server Process and Port
+    <mark class="err">WARNING</mark>
     <mark class="tags">network</mark>         
   </a></li> 
-
-  <li><a href="#">Container Drift Detected (chmod)
-    <mark class="err">ERROR</mark>
-  </a></li> 
-  <li><a href="drift-err.html">Container Drift Detected (open+create)
-    <mark class="err">ERROR</mark>   
-  </a></li>
 
   <li><a href="#">Write below binary dir
     <mark class="err">ERROR</mark>  
     <mark class="tags">filesystem</mark>   
     <mark class="tags">mitre_persistence</mark>            
   </a></li>
+
+  <li><a href="#">Worm-like propagation of Sysrv-hello crypto-jacking botnet 
+    <mark class="err">CRITICAL</mark>
+    <mark class="segment">Cryptomining</mark>
+    <mark class="cve">CVE-2017-5638</mark>
+  </a></li>    
 
   <li><a href="#">Write below monitored dir
     <mark class="err">ERROR</mark>  
@@ -443,7 +483,20 @@ document.onreadystatechange = function () {
     <mark class="okta">okta</mark>  
   </a></li>
 
+  <li><a href="#">Container Drift Detected (chmod)
+    <mark class="err">ERROR</mark>
+  </a></li> 
+
 </ul>
+
+<div class="navbar">
+  <a href="#home" class="active">Created By</a>
+  <a href="https://www.linkedin.com/in/daniellapontes">Daniella Pontes</a>
+  <a href="https://www.linkedin.com/in/matt-kim-24925756">Matt Kim</a>
+  <a href="https://ie.linkedin.com/in/nigel-douglas-9b64b5139">Nigel Douglas</a>
+  <a href="https://nl.linkedin.com/in/pmusa">Pablo Musa</a>
+  <a href="https://www.linkedin.com/in/%E2%98%95-%F0%9D%94%85%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%B1%F0%9D%94%B1-%F0%9D%94%9A%F0%9D%94%AC%F0%9D%94%A9%F0%9D%94%AA%F0%9D%94%9E%F0%9D%94%AF%F0%9D%94%9E%F0%9D%94%AB%F0%9D%94%B0-8b6907/">Brett Wolmarans</a>       
+</div>
 
 <script>
 function myFunction() {
