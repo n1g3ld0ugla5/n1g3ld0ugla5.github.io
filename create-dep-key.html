@@ -96,7 +96,7 @@ $(document).ready(function(){
 <!-- Toolbar -->
 <div class="icon-bar">
   <a class="active" href="index.html"><i class="fa fa-home"></i></a> 
-  <h1>Sudo Potential Privilege Escalation</h1>
+  <h1>Create Deploy Key</h1>
 </div>
 
 <br/>
@@ -111,23 +111,18 @@ $(document).ready(function(){
     <p id="category">Rules:</p>
 <pre>
   <code>
-- <b>rule:</b> Sudo Potential Privilege Escalation
+- <b>rule:</b> Create Deploy Key
   <br/><br/>
-  &nbsp;&nbsp;<b>desc:</b> Privilege escalation vulnerability affecting sudo (<= 1.9.5p2). Executing sudo <br/>
-  &nbsp;&nbsp;&nbsp;using sudoedit -s or sudoedit -i command with command-line argument that ends with a <br/>
-  &nbsp;&nbsp;&nbsp;single backslash character from an unprivileged user it's possible to elevate the user <br/>
-  &nbsp;&nbsp;&nbsp;privileges to root.
+  &nbsp;&nbsp;<b>desc:</b> Detect the creation of a new deploy key for a repository
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> <a id="show1">spawned_process</a> <a id="bool">and</a> user.uid != 0 <a id="bool">and</a> (proc.name=sudoedit <a id="bool">or</a> proc.name = sudo) <br/>
-  &nbsp;&nbsp;&nbsp;<a id="bool">and</a> (proc.args <a id="bool">contains</a> -s <a id="bool">or</a> proc.args <a id="bool">contains</a> -i <a id="bool">or</a> proc.args <a id="bool">contains</a> --login) <a id="bool">and</a><br/>
-  &nbsp;&nbsp;&nbsp;(proc.args <a id="bool">contains</a> "\ " <a id="bool">or</a> proc.args <a id="bool">endswith</a> \)
+  &nbsp;&nbsp;<b>condition:</b> github.type=deploy_key <a id="bool">and</a> github.action=created  
   <br/><br/>
-  &nbsp;&nbsp;<b>output:</b> Detect Sudo Privilege Escalation Exploit (CVE-2021-3156) (user=%user.name <br/>
-  &nbsp;&nbsp;&nbsp;parent=%proc.pname cmdline=%proc.cmdline pid=%proc.pid %container.info)
-  <br/><br/>
-  &nbsp;&nbsp;<b>priority:</b> CRITICAL
-  <br/><br/>
-  &nbsp;&nbsp;<b>tags:</b> [filesystem, mitre_privilege_escalation]
+  &nbsp;&nbsp;<b>output:</b> A new deploy key was created (repository=%github.repo
+  &nbsp;&nbsp;&nbsp;repo_owner=%github.owner org=%github.org user=%github.user)  
+  <br/><br/>  
+  &nbsp;&nbsp;<b>priority:</b> INFO
+  <br/><br/> 
+  &nbsp;&nbsp;<b>source:</b> github
   </code>
 </pre>
 </div>
@@ -137,9 +132,9 @@ $(document).ready(function(){
     <p id="category">Macros:</p>
 <pre>
   <code>
-- <b>macro:</b> spawned_process
+- <b>macro:</b> runc_writing_exec_fifo
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (execve, execveat) <a id="bool">and</a> evt.dir=<)
+  &nbsp;&nbsp;<b>condition:</b> (proc.cmdline="runc:[1:CHILD] init" <a id="bool">and</a> fd.name=/exec.fifo)
   </code>
 </pre>
 </div>
@@ -149,10 +144,10 @@ $(document).ready(function(){
     <p id="category">Macros:</p>
 <pre>
   <code>
-- <b>macro:</b> trusted_images_query_miner_domain_dns
+- <b>macro:</b> runc_writing_var_lib_docker
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (container.image.repository <a id="bool">in</a> (docker.io/falcosecurity/falco, 
-  &nbsp;&nbsp;&nbsp;falcosecurity/falco, public.ecr.aws/falcosecurity/falco))
+  &nbsp;&nbsp;<b>condition:</b> (proc.cmdline="runc:[1:CHILD] init" <a id="bool">and</a> evt.arg.filename <a id="bool">startswith</a> <br/>
+  &nbsp;&nbsp;&nbsp; /var/lib/docker)
   </code>
 </pre>
 </div>
@@ -162,9 +157,9 @@ $(document).ready(function(){
     <p id="category">Macros:</p>
 <pre>
   <code>
-- <b>list:</b> rfc_1918_addresses
+- <b>macro:</b> user_known_container_drift_activities
   <br/><br/>
-  &nbsp;&nbsp;<b>items:</b> ['"10.0.0.0/8"', '"172.16.0.0/12"', '"192.168.0.0/16"']
+  &nbsp;&nbsp;<b>condition:</b> (always_true)
   </code>
 </pre>
 </div>
@@ -234,19 +229,23 @@ $(document).ready(function(){
 </div>
 
 <div id="details">
-<b><p class="small">How to Enable</p></b>
-<p class="small">This rule is <a id="bool2">ENABLED</a> by default<br/>  
+<b><p class="small">Important Notice:</p></b>
+<p class="small">As with any other plugin created by the Falco Authors, you will find a library already built for a Linux environment here<br/>
+<a href="https://download.falco.org/?prefix=plugins/stable/" id="shrink"> Stable Plugin Release Matrix </a> <br/><br/>
+It is a good practice to download the stable version and install it in the directory <b>/usr/local/share/falco/plugins</b>.
+
 <hr>
 <b><p class="small">Description</p></b>
-<p class="small">This rule helps detect CVE-2021-3156: <br/>
-A privilege escalation to root through heap-based buffer overflow</p>
-<a href="https://github.com/falcosecurity/falco/blob/master/rules/falco_rules.yaml#:~:text=Sudo%20Potential%20Privilege%20Escalation" id="shrink"> Example in Rules Engine </a>
+<p class="small">Detect malicious activity in Okta logs with Falco and Sysdig okta-analyzer <br/>
+<a href="https://falco.org/blog/falco-okta-plugin/" id="shrink"> Falco OSS Article </a>
+
+</p>
 <hr>
 <b><p class="small">Known Threat</p></b>
-<p class="small">If you cannot patch your systems immediately, you can detect and potentially prevent the attack. <br/>
-  Even though you might have already upgraded your system and containers affected by the vulnerability, it is still extremely interesting to detect any exploitation attempts and catch malicious activities in your environment. <br/>
-  The Sysdig Security Research team wrote the below blog to detect CVE-2021-3156 using Falco </p>
-<a href="https://sysdig.com/blog/cve-2021-3156-sudo-falco/#:~:text=Detection%20CVE%2D2021%2D3156%20using%20Falco" id="shrink"> Link to Blog </a>
+<p class="small">
+  The hacking group Lapsus$ published a Twitter post with a number of screenshots taken from a computer showing “superuser/admin” access to various systems at authentication firm Okta that took place in January this year.
+  In the below article, we are going to see how it’s possible to analyze and audit current and past logs using Falco and Sysdig okta-analyzer.</p>
+<a href="https://sysdig.com/blog/detect-okta-logs-falco-sysdig/" id="shrink"> Sysdig Blog </a>
 <br/>
 <br/>
 </div>  

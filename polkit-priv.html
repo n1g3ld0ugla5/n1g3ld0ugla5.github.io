@@ -117,7 +117,7 @@ $(document).ready(function(){
   &nbsp;&nbsp;&nbsp;  Polkit's pkexec. By running specially crafted code, a local user can leverage this flaw <br/>
   &nbsp;&nbsp;&nbsp;  to gain root privileges on a compromised system"
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> spawned_process <a id="bool">and</a> user.uid != 0 <a id="bool">and</a> proc.name=pkexec <a id="bool">and</a> proc.args = ''
+  &nbsp;&nbsp;<b>condition:</b> <a id="show1">spawned_process</a> <a id="bool">and</a> user.uid != 0 <a id="bool">and</a> proc.name=pkexec <a id="bool">and</a> proc.args = ''
   <br/><br/>
   &nbsp;&nbsp;<b>output:</b> "Detect Polkit pkexec Local Privilege Escalation Exploit (CVE-2021-4034) <br/> 
   &nbsp;&nbsp;&nbsp;    (user=%user.loginname uid=%user.loginuid command=%proc.cmdline pid=%proc.pid <br/>
@@ -135,11 +135,9 @@ $(document).ready(function(){
     <p id="category">Macros:</p>
 <pre>
   <code>
-- <b>macro:</b> net_miner_pool
+- <b>macro:</b> spawned_process
   <br/><br/>
-  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (sendto, sendmsg, connect) <a id="bool">and</a> evt.dir=< <a id="bool">and</a> (fd.net != 
-  &nbsp;&nbsp;&nbsp;"127.0.0.0/8" <a id="bool">and not</a> fd.snet <a id="bool">in</a> (<a id="show3">rfc_1918_addresses</a>)) <a id="bool">and</a> ((minerpool_http) <a id="bool">or</a> 
-  &nbsp;&nbsp;&nbsp;(minerpool_https) <a id="bool">or</a> (<a id="show4">minerpool_other</a>)))
+  &nbsp;&nbsp;<b>condition:</b> (evt.type <a id="bool">in</a> (execve, execveat) <a id="bool">and</a> evt.dir=<)
   </code>
 </pre>
 </div>

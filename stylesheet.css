@@ -55,15 +55,15 @@ h1 { font-size:1.5vw; color: white; text-align: center; font-weight: normal; mar
   white-space: normal;
   align-content: left;  }
   #parentDiv { width: 100%; height: 70%; }
-  #div1 { width: 49%; float:left; }
-  #myDIV  { display:none; width: 49%; float:right; }
-  #myDIV2 { display:none; width: 49%; float:right; }
-  #myDIV3 { display:none; width: 49%; float:right; } 
-  #myDIV4 { display:none; width: 49%; float:right; }  
-  #myDIV5 { display:none; width: 49%; float:right; }
-  #myDIV6 { display:none; width: 49%; float:right; }
-  #myDIV7 { display:none; width: 49%; float:right; }  
-  #myDIV8 { display:none; width: 49%; float:right; }  
+  #div1 { width: 49%; float:left; resize: both;}
+  #myDIV  { display:none; width: 49%; float:right; resize: both;}
+  #myDIV2 { display:none; width: 49%; float:right; resize: both;}
+  #myDIV3 { display:none; width: 49%; float:right; resize: both;} 
+  #myDIV4 { display:none; width: 49%; float:right; resize: both;}  
+  #myDIV5 { display:none; width: 49%; float:right; resize: both;}
+  #myDIV6 { display:none; width: 49%; float:right; resize: both;}
+  #myDIV7 { display:none; width: 49%; float:right; resize: both;}  
+  #myDIV8 { display:none; width: 49%; float:right; resize: both;}  
   #macro1 {
   background-color: #eee;
   border: 1px solid #999;
@@ -79,7 +79,7 @@ h1 { font-size:1.5vw; color: white; text-align: center; font-weight: normal; mar
   display: inline-block;
 }
 
-#grey {text-decoration-color: grey;}
+#grey {color: grey;}
 
 .tooltip .tooltiptext {
   visibility: hidden;

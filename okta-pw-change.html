@@ -112,20 +112,20 @@ $(document).ready(function(){
 <pre>
   <code>
 - <b>rule:</b> User Changing password in to OKTA
-  <br/>
+  <br/><br/>
   &nbsp;&nbsp;<b>desc:</b> Detect a user change password in OKTA
-  <br/>
+  <br/><br/>
   &nbsp;&nbsp;<b>condition:</b> okta.evt.type = "user.account.update_password"        
-  <br/>
+  <br/><br/>
   &nbsp;&nbsp;<b>output:</b> "A user has changed password from OKTA (user=%okta.actor.name, 
   &nbsp;&nbsp;&nbsp;ip=%okta.client.ip)"
-  <br/>  
+  <br/><br/>  
   &nbsp;&nbsp;<b>priority:</b> NOTICE
-  <br/>  
+  <br/><br/> 
   &nbsp;&nbsp;<b>source:</b> okta 
-  <br/>
+  <br/><br/>
   &nbsp;&nbsp;<b>tags:</b> [okta] 
-  <br/>
+  <br/><br/>
   &nbsp;&nbsp;<b>enabled:</b> false 
   </code>
 </pre>
@@ -247,7 +247,7 @@ It is a good practice to download the stable version and install it in the direc
 <hr>
 <b><p class="small">Known Threat</p></b>
 <p class="small">
-  The hacking group Lapsus$ published a Twitter post with a number of screenshots taken from a computer showing “superuser/admin” access to various systems at authentication firm Okta that took place in January this year. <br/>
+  The hacking group Lapsus$ published a Twitter post with a number of screenshots taken from a computer showing “superuser/admin” access to various systems at authentication firm Okta that took place in January this year.
   In the below article, we are going to see how it’s possible to analyze and audit current and past logs using Falco and Sysdig okta-analyzer.</p>
 <a href="https://sysdig.com/blog/detect-okta-logs-falco-sysdig/" id="shrink"> Sysdig Blog </a>
 <br/>

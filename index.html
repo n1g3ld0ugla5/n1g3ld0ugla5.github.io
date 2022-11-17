@@ -10,95 +10,33 @@
 <style>
 
 
-* {
-  box-sizing: border-box;
-}
-
-mark {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 6px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 15px;
-  margin: 2px 1px;
-  cursor: pointer;
-}
-
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 3%;
-}
-
-.navbar a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.navbar a:hover {
-  background: #f1f1f1;
-  color: black;
-}
-
-.navbar a.active {
-  background-color: #04AA6D;
-  color: white;
-}
-
-.main {
-  padding: 16px;
-  margin-bottom: 30px;
-}
-
-#myInput {
-  background-image: url('/css/searchicon.png');
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
-  font-family: Arial, Helvetica, sans-serif;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-  text-align:center;
-  background-color: #FFFFE0;
-}
-
-#myUL {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-#myUL li a {
-  border: 1px solid #ddd;
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  color: black;
-  display: block;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
+* { box-sizing: border-box; }
+mark { background-color: #4CAF50; /* Green */ border: none; color: white; padding: 6px; text-align: center; text-decoration: none; display: inline-block;
+  font-size: 0.7em; margin: 2px 1px; cursor: pointer; }
+.navbar { overflow: hidden; background-color: #333; position: fixed;
+  bottom: 0; width: 100%; height: 45px; }
+.navbar a { float: left; display: block; color: #f2f2f2; text-align: center;
+  padding: 14px 16px; text-decoration: none; font-size: 17px; height: 100%;
+  font-family: "Lucida Console", "Courier New", monospace; }
+.navbar a:hover { background: #f1f1f1; color: black; }
+.navbar a.active { background-color: #04AA6D; color: white; }
+.main { padding: 16px; margin-bottom: 30px;}
+#myInput { background-image: url('/css/searchicon.png'); background-position: 10px 12px; background-repeat: no-repeat;
+  font-family: Arial, Helvetica, sans-serif; width: 100%; font-size: 16px; padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd; margin-bottom: 12px; text-align:center; background-color: #FFFFE0; }
+#myUL { list-style-type: none; padding: 0; margin: 0; }
+#myUL li a { border: 1px solid #ddd; margin-top: -1px; /* Prevent double borders */ background-color: #f6f6f6; padding: 12px; text-decoration: none;
+  font-size: 1em; color: black; display: block; font-family: Arial, Helvetica, sans-serif;}
+mark.err { color:white; font-weight: bold; float: right; border-radius: 12px; background-color: #ff0000}
+mark.info { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #00ff80}
+mark.warn { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #ffff00}
+mark.crit { color:white; font-weight: bold; float: right; border-radius: 12px; background-color: #ff4000}
+mark.notice { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #bfff00}
 #myUL li a:hover:not(.header) { background-color: #eee; }
 mark.cve { color:black; font-weight: bold; float:right; border-radius: 12px; background-color: #89CFF0;}
 mark.tags { color:white;  float: right; border-radius: 12px; font-weight: bold;}
 mark.segment { color:black; font-weight: bold;  float: right; border-radius: 12px; background-color: orange;}
 mark.custom { color:black;  float: right; border-radius: 12px; background-color: #F4EA56; font-weight: bold;}
-mark.err { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #CF9FFF}
 mark.aws { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #FFB6C1;}
 mark.okta { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #FFB6C1;}
 mark.github { color:black; font-weight: bold; float: right; border-radius: 12px; background-color: #FFB6C1;}
@@ -131,366 +69,378 @@ document.onreadystatechange = function () {
 
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Falco Rules, CVE's, Tags, Priority etc.." title="Type in a name">
 
-<ul id="myUL">
-  <li><a href="schedule-cron-jobs.html">Schedule Cron Jobs
-    <mark class="err">NOTICE</mark>
-    <mark class="cve">CVE-2021-3156</mark> 
-    <mark class="tags">file</mark>
-    <mark class="tags">mitre_persistence</mark>
-  </a></li>  
-  <li><a href="stdout-in.html">Redirect STDOUT/STDIN to Network Connection in Container
-     <mark class="err">NOTICE</mark>   
-     <mark class="okta">Reverse Shell</mark> 
-     <mark class="okta">Log4Shell</mark>          
-  </a></li>   
-
-  <li><a href="disallowed-ssh.html">Disallowed SSH Connection
-    <mark class="err">NOTICE</mark>
-    <mark class="tags">network</mark>
-    <mark class="tags">mitre_remote_service</mark>
-
-  </a></li> 
-
-  <li><a href="read-shell-config.html">Read Shell Configuration File
-    <mark class="err">WARNING</mark>
-    <mark class="tags">file</mark>
-    <mark class="tags">mitre_discovery</mark>
-  </a></li> 
-
-  <li><a href="okta-pw-change.html">User Changing password in to OKTA
-    <mark class="err">NOTICE</mark>
-    <mark class="okta">okta</mark>
-  </a></li>  
-
-  <li><a href="modify-shell-config.html">Modify Shell Configuration File
-    <mark class="err">WARNING</mark>
-    <mark class="tags">file</mark>
-    <mark class="tags">mitre_persistence</mark>
-  </a></li>
-
-  <li><a href="polkit-priv.html">Polkit Local Privilege Escalation Vulnerability
-    <mark class="err">CRITICAL</mark>
-    <mark class="cve">CVE-2021-4034</mark> 
-    <mark class="tags">process</mark>
-    <mark class="tags">mitre_privilege_escalation</mark>
-  </a></li> 
-
-  <li><a href="below-rpm-db.html">Write below rpm database
-    <mark class="err">ERROR</mark>  
-    <mark class="tags">filesystem</mark> 
-    <mark class="tags">software_mgmt</mark>      
-    <mark class="tags">mitre_persistence</mark>            
-  </a></li>
-
-  <li><a href="aws-mfa-login.html">Console Login Without MFA
-    <mark class="err">CRITICAL</mark>
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_console</mark>
-    <mark class="tags">aws_iam</mark> 
-  </a></li>
-
-  <li><a href="potential-privilege.html">Sudo Potential Privilege Escalation 
-    <mark class="err">CRITICAL</mark>
-    <mark class="cve">CVE-2021-3156</mark> 
-    <mark class="tags">filesystem</mark>
-    <mark class="tags">mitre_privilege_escalation</mark>
-  </a></li>
-
-  <li><a href="drift-err.html">Container Drift Detected (open+create)
-    <mark class="err">ERROR</mark>   
-  </a></li>       
-
-  <li><a href="#">Unexpected inbound connection source
-    <mark class="err">NOTICE</mark>
-    <mark class="tags">network</mark>
-  </a></li> 
-
-  <li><a href="cryptomining.html">Detect outbound connections to common miner pool ports 
-    <mark class="err">CRITICAL</mark>
-    <mark class="segment">Cryptomining</mark>
-    <mark class="tags">network</mark>
-    <mark class="tags">mitre_execution</mark>    
-  </a></li>
-
-
-  
-  <li><a href="packet-socket.html">Packet socket created in container 
-    <mark class="err">NOTICE</mark>    
-    <mark class="cve">CVE-2020-14386</mark> 
-    <mark class="tags">network</mark>
-    <mark class="tags">mitre_discovery</mark>    
-  </a></li>   
-
-  <li><a href="net-conn-outside-sub.html">Network Connection outside Local Subnet
-    <mark class="err">WARNING</mark>    
-    <mark class="tags">network</mark>    
-  </a></li> 
-
-  <li><a href="github-mining.html">Github action with miners 
-    <mark class="err">CRITICAL</mark>    
-    <mark class="segment">Cryptomining</mark>
-    <mark class="github">GitHub</mark>    
-  </a></li>  
-
-  <li><a href="#">Outbound Connection to C2 Servers
-    <mark class="err">WARNING</mark>     
-    <mark class="tags">network</mark>      
-  </a></li>
-
-  <li><a href="java-process.html">Java Process Class File Download
-    <mark class="err">CRITICAL</mark>
-    <mark class="cve">CVE-2021-44228</mark>
-    <mark class="okta">Log4Shell</mark>          
-    <mark class="tags">mitre_initial_access</mark>           
-  </a></li>     
-
-  <li><a href="stratum.html">Detect crypto miners using the Stratum protocol
-    <mark class="err">CRITICAL</mark>   
-    <mark class="segment">Cryptomining</mark> 
-    <mark class="tags">process</mark> 
-    <mark class="tags">mitre_execution</mark>         
-  </a></li>  
-
-  <li><a href="service-with-external-ip.html">Create/Update ClusterIP Service with External IP
-    <mark class="err">WARNING</mark>
-    <mark class="cve">CVE-2020-8554</mark>
-    <mark class="custom">CUSTOM</mark>     
-  </a></li> 
-
-  <li><a href="java-network-read.html">Java Process Class File Download
-    <mark class="err">CRITICAL</mark>
-    <mark class="cve">CVE-2021-44228</mark>
-    <mark class="tags">mitre_initial_access</mark>     
-  </a></li>  
-
-  <li><a href="#">Linux Kernel Module Injection Detected
-    <mark class="err">WARNING</mark>     
-    <mark class="tags">process</mark>  
-  </a></li>
-
-  <li><a href="docker-client.html">The docker client is executed in a container
-    <mark class="err">WARNING</mark>
-    <mark class="tags">container</mark>    
-    <mark class="tags">mitre_execution</mark>     
-  </a></li>  
- 
-  <li><a href="auth-proc-port.html">Outbound or Inbound Traffic not to Authorized Server Process and Port
-    <mark class="err">WARNING</mark>
-    <mark class="tags">network</mark>         
-  </a></li> 
-
-  <li><a href="#">Write below binary dir
-    <mark class="err">ERROR</mark>  
-    <mark class="tags">filesystem</mark>   
-    <mark class="tags">mitre_persistence</mark>            
-  </a></li>
-
-  <li><a href="#">Worm-like propagation of Sysrv-hello crypto-jacking botnet 
-    <mark class="err">CRITICAL</mark>
-    <mark class="segment">Cryptomining</mark>
-    <mark class="cve">CVE-2017-5638</mark>
-  </a></li>    
-
-  <li><a href="#">Write below monitored dir
-    <mark class="err">ERROR</mark>  
-    <mark class="tags">filesystem</mark>   
-    <mark class="tags">mitre_persistence</mark>            
-  </a></li>  
-
-  <li><a href="#">Read ssh information
-    <mark class="err">ERROR</mark>  
-    <mark class="tags">filesystem</mark>   
-    <mark class="tags">mitre_discovery</mark>            
-  </a></li> 
-
-  <li><a href="#">Write below etc
-    <mark class="err">ERROR</mark>  
-    <mark class="tags">filesystem</mark>   
-    <mark class="tags">mitre_persistence</mark>            
-  </a></li>  
-
-  <li><a href="#">Write below root
-    <mark class="err">ERROR</mark>  
-    <mark class="tags">filesystem</mark>   
-    <mark class="tags">mitre_persistence</mark>            
-  </a></li>       
-
-  <li><a href="#">Modify binary dirs
-    <mark class="err">ERROR</mark>  
-    <mark class="tags">filesystem</mark>    
-    <mark class="tags">mitre_persistence</mark>            
-  </a></li>  
-
-  <li><a href="#">Unexpected outbound connection destination
-    <mark class="tags">network</mark>
-  </a></li>  
-
-  <!-- GitHub -->
-  <!-- https://github.com/falcosecurity/plugins/blob/master/plugins/github/rules/github.yaml --> 
-  <li><a href="#">Webhook Connected
-    <mark class="github">GitHub</mark> 
-  </a></li> 
-  <li><a href="#">Webhook Disconnected
-    <mark class="github">GitHub</mark> 
-  </a></li> 
-  <li><a href="#">Private Repository Becoming Public
-    <mark class="github">GitHub</mark> 
-  </a></li> 
-  <li><a href="#">Public Repository Becoming Private
-    <mark class="github">GitHub</mark>
-  </a></li> 
-  <li><a href="#">Create Public Repository
-    <mark class="github">GitHub</mark>
-  </a></li> 
-  <li><a href="#">Delete Public Repository
-    <mark class="github">GitHub</mark>
-  </a></li> 
-  <li><a href="#">Create Repository
-    <mark class="github">GitHub</mark>
-  </a></li> 
-  <li><a href="#">Delete Repository
-    <mark class="github">GitHub</mark>
-  </a></li>        
-  <li><a href="#">Create Deploy Key
-    <mark class="github">GitHub</mark>
-  </a></li> 
-  <li><a href="#">Delete Deploy Key
-    <mark class="github">GitHub</mark>
-  </a></li>         
-  <li><a href="#">Add Collaborator to Repository
-    <mark class="github">GitHub</mark>
-  </a></li> 
-  <li><a href="#">Remove Collaborator from Repository
-    <mark class="github">GitHub</mark>
-  </a></li>  
-  <li><a href="#">Secret pushed into a public repository
-    <mark class="github">GitHub</mark>
-  </a></li> 
-  <li><a href="#">Secret pushed into a private repository
-    <mark class="github">GitHub</mark>
-  </a></li>
-
-  <!-- AWS -->
-  <!-- https://github.com/falcosecurity/plugins/blob/master/plugins/cloudtrail/rules/aws_cloudtrail_rules.yaml -->
-  <li><a href="#">All Cloudtrail Events
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>       
-  </a></li>   
-  <li><a href="#">Console Login Through Assume Role
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_console</mark>
-    <mark class="tags">aws_iam</mark>             
-  </a></li>  
-  <li><a href="#">Deactivate MFA for Root User
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_iam</mark> 
-  </a></li> 
-  <li><a href="#">Create AWS user
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_iam</mark> 
-  </a></li>   
-  <li><a href="#">Create Group
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_iam</mark> 
-  </a></li> 
-  <li><a href="#">Delete Group
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_iam</mark> 
-  </a></li> 
-  <li><a href="#">ECS Service Created
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_ecs</mark>
-    <mark class="tags">aws_fargate</mark>      
-  </a></li> 
-  <li><a href="#">ECS Task Run or Started
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_ecs</mark>
-    <mark class="tags">aws_fargate</mark>  
-  </a></li> 
-  <li><a href="#">Create Lambda Function
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_lambda</mark>
-  </a></li> 
-  <li><a href="#">Update Lambda Function Code
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_lambda</mark>
-  </a></li> 
-  <li><a href="#">Update Lambda Function Configuration
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_lambda</mark>
-  </a></li> 
-  <li><a href="#">Run Instances
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_ec2</mark>
-  </a></li> 
-  <li><a href="#">Run Instances in Non-approved Region
-    <mark class="aws">AWS</mark>
-    <mark class="tags">cloud</mark>
-    <mark class="tags">aws_ec2</mark>
-  </a></li>     
-
-  <!-- Okta -->
-  <!-- https://github.com/falcosecurity/plugins/blob/master/plugins/okta/rules/okta_rules.yaml -->
-  <li><a href="#">Creating a new OKTA user account
-    <mark class="err">NOTICE</mark>    
-    <mark class="okta">okta</mark>    
-  </a></li>  
-  <li><a href="#">User accessing app via single sign on OKTA
-    <mark class="err">NOTICE</mark>    
-    <mark class="okta">okta</mark>  
-  </a></li>  
-  <li><a href="#">User has been locked out in OKTA
-    <mark class="err">NOTICE</mark>     
-    <mark class="okta">okta</mark>  
-  </a></li>  
-  <li><a href="#">User has been moved from suspended status in OKTA
-    <mark class="okta">okta</mark>  
-  </a></li>         
-  <li><a href="#">User has been activated in OKTA
-    <mark class="okta">okta</mark>  
-  </a></li>  
-  <li><a href="#">User has been deactivated in OKTA
-    <mark class="okta">okta</mark>  
-  </a></li> 
-  <li><a href="#">User has been suspended in OKTA
-    <mark class="okta">okta</mark>  
-  </a></li>  
-  <li><a href="#">Admin permission has been assigned to a user in OKTA
-    <mark class="okta">okta</mark>  
-  </a></li> 
-  <li><a href="#">Creating a new OKTA API token
-    <mark class="okta">okta</mark>  
-  </a></li> 
-  <li><a href="#">User accessing OKTA admin section
-    <mark class="okta">okta</mark>  
-  </a></li>   
-  <li><a href="#">Adding user in OKTA group
-    <mark class="okta">okta</mark>  
-  </a></li> 
-  <li><a href="#">removing MFA factor from user in OKTA
-    <mark class="okta">okta</mark>  
-  </a></li>
-
-  <li><a href="#">Container Drift Detected (chmod)
-    <mark class="err">ERROR</mark>
-  </a></li> 
-
+<ul id="&#109;&#121;&#85;&#76;">&#13;
+&#32;&#32;<li><a href="&#115;&#99;&#104;&#101;&#100;&#117;&#108;&#101;&#45;&#99;&#114;&#111;&#110;&#45;&#106;&#111;&#98;&#115;&#46;&#104;&#116;&#109;&#108;">&#83;&#99;&#104;&#101;&#100;&#117;&#108;&#101;&#32;&#67;&#114;&#111;&#110;&#32;&#74;&#111;&#98;&#115;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#50;&#49;&#45;&#51;&#49;&#53;&#54;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#115;&#116;&#100;&#111;&#117;&#116;&#45;&#105;&#110;&#46;&#104;&#116;&#109;&#108;">&#82;&#101;&#100;&#105;&#114;&#101;&#99;&#116;&#32;&#83;&#84;&#68;&#79;&#85;&#84;&#47;&#83;&#84;&#68;&#73;&#78;&#32;&#116;&#111;&#32;&#78;&#101;&#116;&#119;&#111;&#114;&#107;&#32;&#67;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#32;&#105;&#110;&#32;&#67;&#111;&#110;&#116;&#97;&#105;&#110;&#101;&#114;&#13;
+&#32;&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#82;&#101;&#118;&#101;&#114;&#115;&#101;&#32;&#83;&#104;&#101;&#108;&#108;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#76;&#111;&#103;&#52;&#83;&#104;&#101;&#108;&#108;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#100;&#105;&#115;&#97;&#108;&#108;&#111;&#119;&#101;&#100;&#45;&#115;&#115;&#104;&#46;&#104;&#116;&#109;&#108;">&#68;&#105;&#115;&#97;&#108;&#108;&#111;&#119;&#101;&#100;&#32;&#83;&#83;&#72;&#32;&#67;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#114;&#101;&#109;&#111;&#116;&#101;&#95;&#115;&#101;&#114;&#118;&#105;&#99;&#101;</mark>&#13;
+&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#114;&#101;&#97;&#100;&#45;&#115;&#104;&#101;&#108;&#108;&#45;&#99;&#111;&#110;&#102;&#105;&#103;&#46;&#104;&#116;&#109;&#108;">&#82;&#101;&#97;&#100;&#32;&#83;&#104;&#101;&#108;&#108;&#32;&#67;&#111;&#110;&#102;&#105;&#103;&#117;&#114;&#97;&#116;&#105;&#111;&#110;&#32;&#70;&#105;&#108;&#101;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#100;&#105;&#115;&#99;&#111;&#118;&#101;&#114;&#121;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#111;&#107;&#116;&#97;&#45;&#112;&#119;&#45;&#99;&#104;&#97;&#110;&#103;&#101;&#46;&#104;&#116;&#109;&#108;">&#85;&#115;&#101;&#114;&#32;&#67;&#104;&#97;&#110;&#103;&#105;&#110;&#103;&#32;&#112;&#97;&#115;&#115;&#119;&#111;&#114;&#100;&#32;&#105;&#110;&#32;&#116;&#111;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#109;&#111;&#100;&#105;&#102;&#121;&#45;&#115;&#104;&#101;&#108;&#108;&#45;&#99;&#111;&#110;&#102;&#105;&#103;&#46;&#104;&#116;&#109;&#108;">&#77;&#111;&#100;&#105;&#102;&#121;&#32;&#83;&#104;&#101;&#108;&#108;&#32;&#67;&#111;&#110;&#102;&#105;&#103;&#117;&#114;&#97;&#116;&#105;&#111;&#110;&#32;&#70;&#105;&#108;&#101;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#112;&#111;&#108;&#107;&#105;&#116;&#45;&#112;&#114;&#105;&#118;&#46;&#104;&#116;&#109;&#108;">&#80;&#111;&#108;&#107;&#105;&#116;&#32;&#76;&#111;&#99;&#97;&#108;&#32;&#80;&#114;&#105;&#118;&#105;&#108;&#101;&#103;&#101;&#32;&#69;&#115;&#99;&#97;&#108;&#97;&#116;&#105;&#111;&#110;&#32;&#86;&#117;&#108;&#110;&#101;&#114;&#97;&#98;&#105;&#108;&#105;&#116;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#50;&#49;&#45;&#52;&#48;&#51;&#52;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#112;&#114;&#111;&#99;&#101;&#115;&#115;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#114;&#105;&#118;&#105;&#108;&#101;&#103;&#101;&#95;&#101;&#115;&#99;&#97;&#108;&#97;&#116;&#105;&#111;&#110;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#98;&#101;&#108;&#111;&#119;&#45;&#114;&#112;&#109;&#45;&#100;&#98;&#46;&#104;&#116;&#109;&#108;">&#87;&#114;&#105;&#116;&#101;&#32;&#98;&#101;&#108;&#111;&#119;&#32;&#114;&#112;&#109;&#32;&#100;&#97;&#116;&#97;&#98;&#97;&#115;&#101;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#95;&#109;&#103;&#109;&#116;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#97;&#119;&#115;&#45;&#109;&#102;&#97;&#45;&#108;&#111;&#103;&#105;&#110;&#46;&#104;&#116;&#109;&#108;">&#67;&#111;&#110;&#115;&#111;&#108;&#101;&#32;&#76;&#111;&#103;&#105;&#110;&#32;&#87;&#105;&#116;&#104;&#111;&#117;&#116;&#32;&#77;&#70;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#99;&#111;&#110;&#115;&#111;&#108;&#101;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#105;&#97;&#109;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#112;&#111;&#116;&#101;&#110;&#116;&#105;&#97;&#108;&#45;&#112;&#114;&#105;&#118;&#105;&#108;&#101;&#103;&#101;&#46;&#104;&#116;&#109;&#108;">&#83;&#117;&#100;&#111;&#32;&#80;&#111;&#116;&#101;&#110;&#116;&#105;&#97;&#108;&#32;&#80;&#114;&#105;&#118;&#105;&#108;&#101;&#103;&#101;&#32;&#69;&#115;&#99;&#97;&#108;&#97;&#116;&#105;&#111;&#110;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#50;&#49;&#45;&#51;&#49;&#53;&#54;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#114;&#105;&#118;&#105;&#108;&#101;&#103;&#101;&#95;&#101;&#115;&#99;&#97;&#108;&#97;&#116;&#105;&#111;&#110;</mark>&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#100;&#114;&#105;&#102;&#116;&#45;&#101;&#114;&#114;&#46;&#104;&#116;&#109;&#108;">&#67;&#111;&#110;&#116;&#97;&#105;&#110;&#101;&#114;&#32;&#68;&#114;&#105;&#102;&#116;&#32;&#68;&#101;&#116;&#101;&#99;&#116;&#101;&#100;&#32;&#40;&#111;&#112;&#101;&#110;&#43;&#99;&#114;&#101;&#97;&#116;&#101;&#41;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#99;&#114;&#121;&#112;&#116;&#111;&#109;&#105;&#110;&#105;&#110;&#103;&#46;&#104;&#116;&#109;&#108;">&#68;&#101;&#116;&#101;&#99;&#116;&#32;&#111;&#117;&#116;&#98;&#111;&#117;&#110;&#100;&#32;&#99;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#115;&#32;&#116;&#111;&#32;&#99;&#111;&#109;&#109;&#111;&#110;&#32;&#109;&#105;&#110;&#101;&#114;&#32;&#112;&#111;&#111;&#108;&#32;&#112;&#111;&#114;&#116;&#115;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#115;&#101;&#103;&#109;&#101;&#110;&#116;">&#67;&#114;&#121;&#112;&#116;&#111;&#109;&#105;&#110;&#105;&#110;&#103;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#101;&#120;&#101;&#99;&#117;&#116;&#105;&#111;&#110;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#110;&#101;&#120;&#112;&#101;&#99;&#116;&#101;&#100;&#32;&#105;&#110;&#98;&#111;&#117;&#110;&#100;&#32;&#99;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#32;&#115;&#111;&#117;&#114;&#99;&#101;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#112;&#97;&#99;&#107;&#101;&#116;&#45;&#115;&#111;&#99;&#107;&#101;&#116;&#46;&#104;&#116;&#109;&#108;">&#80;&#97;&#99;&#107;&#101;&#116;&#32;&#115;&#111;&#99;&#107;&#101;&#116;&#32;&#99;&#114;&#101;&#97;&#116;&#101;&#100;&#32;&#105;&#110;&#32;&#99;&#111;&#110;&#116;&#97;&#105;&#110;&#101;&#114;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#50;&#48;&#45;&#49;&#52;&#51;&#56;&#54;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#100;&#105;&#115;&#99;&#111;&#118;&#101;&#114;&#121;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#110;&#101;&#116;&#45;&#99;&#111;&#110;&#110;&#45;&#111;&#117;&#116;&#115;&#105;&#100;&#101;&#45;&#115;&#117;&#98;&#46;&#104;&#116;&#109;&#108;">&#78;&#101;&#116;&#119;&#111;&#114;&#107;&#32;&#67;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#32;&#111;&#117;&#116;&#115;&#105;&#100;&#101;&#32;&#76;&#111;&#99;&#97;&#108;&#32;&#83;&#117;&#98;&#110;&#101;&#116;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#103;&#105;&#116;&#104;&#117;&#98;&#45;&#109;&#105;&#110;&#105;&#110;&#103;&#46;&#104;&#116;&#109;&#108;">&#71;&#105;&#116;&#104;&#117;&#98;&#32;&#97;&#99;&#116;&#105;&#111;&#110;&#32;&#119;&#105;&#116;&#104;&#32;&#109;&#105;&#110;&#101;&#114;&#115;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#115;&#101;&#103;&#109;&#101;&#110;&#116;">&#67;&#114;&#121;&#112;&#116;&#111;&#109;&#105;&#110;&#105;&#110;&#103;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#79;&#117;&#116;&#98;&#111;&#117;&#110;&#100;&#32;&#67;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#32;&#116;&#111;&#32;&#67;&#50;&#32;&#83;&#101;&#114;&#118;&#101;&#114;&#115;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#106;&#97;&#118;&#97;&#45;&#112;&#114;&#111;&#99;&#101;&#115;&#115;&#46;&#104;&#116;&#109;&#108;">&#74;&#97;&#118;&#97;&#32;&#80;&#114;&#111;&#99;&#101;&#115;&#115;&#32;&#67;&#108;&#97;&#115;&#115;&#32;&#70;&#105;&#108;&#101;&#32;&#68;&#111;&#119;&#110;&#108;&#111;&#97;&#100;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#50;&#49;&#45;&#52;&#52;&#50;&#50;&#56;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#76;&#111;&#103;&#52;&#83;&#104;&#101;&#108;&#108;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#105;&#110;&#105;&#116;&#105;&#97;&#108;&#95;&#97;&#99;&#99;&#101;&#115;&#115;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#115;&#116;&#114;&#97;&#116;&#117;&#109;&#46;&#104;&#116;&#109;&#108;">&#68;&#101;&#116;&#101;&#99;&#116;&#32;&#99;&#114;&#121;&#112;&#116;&#111;&#32;&#109;&#105;&#110;&#101;&#114;&#115;&#32;&#117;&#115;&#105;&#110;&#103;&#32;&#116;&#104;&#101;&#32;&#83;&#116;&#114;&#97;&#116;&#117;&#109;&#32;&#112;&#114;&#111;&#116;&#111;&#99;&#111;&#108;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#115;&#101;&#103;&#109;&#101;&#110;&#116;">&#67;&#114;&#121;&#112;&#116;&#111;&#109;&#105;&#110;&#105;&#110;&#103;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#112;&#114;&#111;&#99;&#101;&#115;&#115;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#101;&#120;&#101;&#99;&#117;&#116;&#105;&#111;&#110;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#45;&#119;&#105;&#116;&#104;&#45;&#101;&#120;&#116;&#101;&#114;&#110;&#97;&#108;&#45;&#105;&#112;&#46;&#104;&#116;&#109;&#108;">&#67;&#114;&#101;&#97;&#116;&#101;&#47;&#85;&#112;&#100;&#97;&#116;&#101;&#32;&#67;&#108;&#117;&#115;&#116;&#101;&#114;&#73;&#80;&#32;&#83;&#101;&#114;&#118;&#105;&#99;&#101;&#32;&#119;&#105;&#116;&#104;&#32;&#69;&#120;&#116;&#101;&#114;&#110;&#97;&#108;&#32;&#73;&#80;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#50;&#48;&#45;&#56;&#53;&#53;&#52;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#117;&#115;&#116;&#111;&#109;">&#67;&#85;&#83;&#84;&#79;&#77;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#106;&#97;&#118;&#97;&#45;&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#45;&#114;&#101;&#97;&#100;&#46;&#104;&#116;&#109;&#108;">&#74;&#97;&#118;&#97;&#32;&#80;&#114;&#111;&#99;&#101;&#115;&#115;&#32;&#67;&#108;&#97;&#115;&#115;&#32;&#70;&#105;&#108;&#101;&#32;&#68;&#111;&#119;&#110;&#108;&#111;&#97;&#100;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#50;&#49;&#45;&#52;&#52;&#50;&#50;&#56;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#105;&#110;&#105;&#116;&#105;&#97;&#108;&#95;&#97;&#99;&#99;&#101;&#115;&#115;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#76;&#105;&#110;&#117;&#120;&#32;&#75;&#101;&#114;&#110;&#101;&#108;&#32;&#77;&#111;&#100;&#117;&#108;&#101;&#32;&#73;&#110;&#106;&#101;&#99;&#116;&#105;&#111;&#110;&#32;&#68;&#101;&#116;&#101;&#99;&#116;&#101;&#100;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#112;&#114;&#111;&#99;&#101;&#115;&#115;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#100;&#111;&#99;&#107;&#101;&#114;&#45;&#99;&#108;&#105;&#101;&#110;&#116;&#46;&#104;&#116;&#109;&#108;">&#84;&#104;&#101;&#32;&#100;&#111;&#99;&#107;&#101;&#114;&#32;&#99;&#108;&#105;&#101;&#110;&#116;&#32;&#105;&#115;&#32;&#101;&#120;&#101;&#99;&#117;&#116;&#101;&#100;&#32;&#105;&#110;&#32;&#97;&#32;&#99;&#111;&#110;&#116;&#97;&#105;&#110;&#101;&#114;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#111;&#110;&#116;&#97;&#105;&#110;&#101;&#114;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#101;&#120;&#101;&#99;&#117;&#116;&#105;&#111;&#110;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#13;
+&#32;&#32;<li><a href="&#97;&#117;&#116;&#104;&#45;&#112;&#114;&#111;&#99;&#45;&#112;&#111;&#114;&#116;&#46;&#104;&#116;&#109;&#108;">&#79;&#117;&#116;&#98;&#111;&#117;&#110;&#100;&#32;&#111;&#114;&#32;&#73;&#110;&#98;&#111;&#117;&#110;&#100;&#32;&#84;&#114;&#97;&#102;&#102;&#105;&#99;&#32;&#110;&#111;&#116;&#32;&#116;&#111;&#32;&#65;&#117;&#116;&#104;&#111;&#114;&#105;&#122;&#101;&#100;&#32;&#83;&#101;&#114;&#118;&#101;&#114;&#32;&#80;&#114;&#111;&#99;&#101;&#115;&#115;&#32;&#97;&#110;&#100;&#32;&#80;&#111;&#114;&#116;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#87;&#114;&#105;&#116;&#101;&#32;&#98;&#101;&#108;&#111;&#119;&#32;&#98;&#105;&#110;&#97;&#114;&#121;&#32;&#100;&#105;&#114;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#87;&#111;&#114;&#109;&#45;&#108;&#105;&#107;&#101;&#32;&#112;&#114;&#111;&#112;&#97;&#103;&#97;&#116;&#105;&#111;&#110;&#32;&#111;&#102;&#32;&#83;&#121;&#115;&#114;&#118;&#45;&#104;&#101;&#108;&#108;&#111;&#32;&#99;&#114;&#121;&#112;&#116;&#111;&#45;&#106;&#97;&#99;&#107;&#105;&#110;&#103;&#32;&#98;&#111;&#116;&#110;&#101;&#116;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#115;&#101;&#103;&#109;&#101;&#110;&#116;">&#67;&#114;&#121;&#112;&#116;&#111;&#109;&#105;&#110;&#105;&#110;&#103;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#118;&#101;">&#67;&#86;&#69;&#45;&#50;&#48;&#49;&#55;&#45;&#53;&#54;&#51;&#56;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#87;&#114;&#105;&#116;&#101;&#32;&#98;&#101;&#108;&#111;&#119;&#32;&#109;&#111;&#110;&#105;&#116;&#111;&#114;&#101;&#100;&#32;&#100;&#105;&#114;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#82;&#101;&#97;&#100;&#32;&#115;&#115;&#104;&#32;&#105;&#110;&#102;&#111;&#114;&#109;&#97;&#116;&#105;&#111;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#100;&#105;&#115;&#99;&#111;&#118;&#101;&#114;&#121;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#87;&#114;&#105;&#116;&#101;&#32;&#98;&#101;&#108;&#111;&#119;&#32;&#101;&#116;&#99;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#87;&#114;&#105;&#116;&#101;&#32;&#98;&#101;&#108;&#111;&#119;&#32;&#114;&#111;&#111;&#116;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#77;&#111;&#100;&#105;&#102;&#121;&#32;&#98;&#105;&#110;&#97;&#114;&#121;&#32;&#100;&#105;&#114;&#115;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#102;&#105;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#109;&#105;&#116;&#114;&#101;&#95;&#112;&#101;&#114;&#115;&#105;&#115;&#116;&#101;&#110;&#99;&#101;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#110;&#101;&#120;&#112;&#101;&#99;&#116;&#101;&#100;&#32;&#111;&#117;&#116;&#98;&#111;&#117;&#110;&#100;&#32;&#99;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#32;&#100;&#101;&#115;&#116;&#105;&#110;&#97;&#116;&#105;&#111;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#13;
+&#32;&#32;<!-- GitHub -->&#13;
+&#32;&#32;<!-- https://github.com/falcosecurity/plugins/blob/master/plugins/github/rules/github.yaml -->&#32;&#13;
+&#32;&#32;<li><a href="&#119;&#101;&#98;&#45;&#99;&#111;&#110;&#110;&#46;&#104;&#116;&#109;&#108;">&#87;&#101;&#98;&#104;&#111;&#111;&#107;&#32;&#67;&#111;&#110;&#110;&#101;&#99;&#116;&#101;&#100;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#68;&#69;&#66;&#85;&#71;</mark>&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#119;&#101;&#98;&#45;&#100;&#105;&#115;&#99;&#46;&#104;&#116;&#109;&#108;">&#87;&#101;&#98;&#104;&#111;&#111;&#107;&#32;&#68;&#105;&#115;&#99;&#111;&#110;&#110;&#101;&#99;&#116;&#101;&#100;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#68;&#69;&#66;&#85;&#71;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#112;&#114;&#105;&#118;&#45;&#112;&#117;&#98;&#46;&#104;&#116;&#109;&#108;">&#80;&#114;&#105;&#118;&#97;&#116;&#101;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#32;&#66;&#101;&#99;&#111;&#109;&#105;&#110;&#103;&#32;&#80;&#117;&#98;&#108;&#105;&#99;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#112;&#117;&#98;&#45;&#112;&#114;&#105;&#118;&#46;&#104;&#116;&#109;&#108;">&#80;&#117;&#98;&#108;&#105;&#99;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#32;&#66;&#101;&#99;&#111;&#109;&#105;&#110;&#103;&#32;&#80;&#114;&#105;&#118;&#97;&#116;&#101;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#112;&#117;&#98;&#45;&#114;&#101;&#112;&#111;&#46;&#104;&#116;&#109;&#108;">&#67;&#114;&#101;&#97;&#116;&#101;&#32;&#80;&#117;&#98;&#108;&#105;&#99;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#100;&#101;&#108;&#45;&#114;&#101;&#112;&#111;&#46;&#104;&#116;&#109;&#108;">&#68;&#101;&#108;&#101;&#116;&#101;&#32;&#80;&#117;&#98;&#108;&#105;&#99;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#119;&#97;&#114;&#110;">&#87;&#65;&#82;&#78;&#73;&#78;&#71;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#99;&#114;&#101;&#97;&#116;&#101;&#45;&#114;&#101;&#112;&#111;&#46;&#104;&#116;&#109;&#108;">&#67;&#114;&#101;&#97;&#116;&#101;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#105;&#110;&#102;&#111;">&#73;&#78;&#70;&#79;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#100;&#101;&#108;&#45;&#114;&#101;&#112;&#111;&#45;&#97;&#110;&#121;&#46;&#104;&#116;&#109;&#108;">&#68;&#101;&#108;&#101;&#116;&#101;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#105;&#110;&#102;&#111;">&#73;&#78;&#70;&#79;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#99;&#114;&#101;&#97;&#116;&#101;&#45;&#100;&#101;&#112;&#45;&#107;&#101;&#121;&#46;&#104;&#116;&#109;&#108;">&#67;&#114;&#101;&#97;&#116;&#101;&#32;&#68;&#101;&#112;&#108;&#111;&#121;&#32;&#75;&#101;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#105;&#110;&#102;&#111;">&#73;&#78;&#70;&#79;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#100;&#101;&#108;&#45;&#100;&#101;&#112;&#45;&#107;&#101;&#121;&#46;&#104;&#116;&#109;&#108;">&#68;&#101;&#108;&#101;&#116;&#101;&#32;&#68;&#101;&#112;&#108;&#111;&#121;&#32;&#75;&#101;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#105;&#110;&#102;&#111;">&#73;&#78;&#70;&#79;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#97;&#100;&#100;&#45;&#99;&#111;&#108;&#108;&#97;&#98;&#46;&#104;&#116;&#109;&#108;">&#65;&#100;&#100;&#32;&#67;&#111;&#108;&#108;&#97;&#98;&#111;&#114;&#97;&#116;&#111;&#114;&#32;&#116;&#111;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#105;&#110;&#102;&#111;">&#73;&#78;&#70;&#79;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#114;&#101;&#109;&#45;&#99;&#111;&#108;&#108;&#97;&#98;&#46;&#104;&#116;&#109;&#108;">&#82;&#101;&#109;&#111;&#118;&#101;&#32;&#67;&#111;&#108;&#108;&#97;&#98;&#111;&#114;&#97;&#116;&#111;&#114;&#32;&#102;&#114;&#111;&#109;&#32;&#82;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#105;&#110;&#102;&#111;">&#73;&#78;&#70;&#79;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#115;&#101;&#99;&#45;&#112;&#117;&#98;&#46;&#104;&#116;&#109;&#108;">&#83;&#101;&#99;&#114;&#101;&#116;&#32;&#112;&#117;&#115;&#104;&#101;&#100;&#32;&#105;&#110;&#116;&#111;&#32;&#97;&#32;&#112;&#117;&#98;&#108;&#105;&#99;&#32;&#114;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#115;&#101;&#99;&#45;&#112;&#114;&#105;&#118;&#46;&#104;&#116;&#109;&#108;">&#83;&#101;&#99;&#114;&#101;&#116;&#32;&#112;&#117;&#115;&#104;&#101;&#100;&#32;&#105;&#110;&#116;&#111;&#32;&#97;&#32;&#112;&#114;&#105;&#118;&#97;&#116;&#101;&#32;&#114;&#101;&#112;&#111;&#115;&#105;&#116;&#111;&#114;&#121;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#99;&#114;&#105;&#116;">&#67;&#82;&#73;&#84;&#73;&#67;&#65;&#76;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#103;&#105;&#116;&#104;&#117;&#98;">&#71;&#105;&#116;&#72;&#117;&#98;</mark>&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<!-- AWS -->&#13;
+&#32;&#32;<!-- https://github.com/falcosecurity/plugins/blob/master/plugins/cloudtrail/rules/aws_cloudtrail_rules.yaml -->&#13;
+&#32;&#32;<li><a href="&#35;">&#65;&#108;&#108;&#32;&#67;&#108;&#111;&#117;&#100;&#116;&#114;&#97;&#105;&#108;&#32;&#69;&#118;&#101;&#110;&#116;&#115;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#67;&#111;&#110;&#115;&#111;&#108;&#101;&#32;&#76;&#111;&#103;&#105;&#110;&#32;&#84;&#104;&#114;&#111;&#117;&#103;&#104;&#32;&#65;&#115;&#115;&#117;&#109;&#101;&#32;&#82;&#111;&#108;&#101;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#99;&#111;&#110;&#115;&#111;&#108;&#101;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#105;&#97;&#109;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#68;&#101;&#97;&#99;&#116;&#105;&#118;&#97;&#116;&#101;&#32;&#77;&#70;&#65;&#32;&#102;&#111;&#114;&#32;&#82;&#111;&#111;&#116;&#32;&#85;&#115;&#101;&#114;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#105;&#97;&#109;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#67;&#114;&#101;&#97;&#116;&#101;&#32;&#65;&#87;&#83;&#32;&#117;&#115;&#101;&#114;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#105;&#97;&#109;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#67;&#114;&#101;&#97;&#116;&#101;&#32;&#71;&#114;&#111;&#117;&#112;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#105;&#97;&#109;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#68;&#101;&#108;&#101;&#116;&#101;&#32;&#71;&#114;&#111;&#117;&#112;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#105;&#97;&#109;</mark>&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#69;&#67;&#83;&#32;&#83;&#101;&#114;&#118;&#105;&#99;&#101;&#32;&#67;&#114;&#101;&#97;&#116;&#101;&#100;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#101;&#99;&#115;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#102;&#97;&#114;&#103;&#97;&#116;&#101;</mark>&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#69;&#67;&#83;&#32;&#84;&#97;&#115;&#107;&#32;&#82;&#117;&#110;&#32;&#111;&#114;&#32;&#83;&#116;&#97;&#114;&#116;&#101;&#100;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#101;&#99;&#115;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#102;&#97;&#114;&#103;&#97;&#116;&#101;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#67;&#114;&#101;&#97;&#116;&#101;&#32;&#76;&#97;&#109;&#98;&#100;&#97;&#32;&#70;&#117;&#110;&#99;&#116;&#105;&#111;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#108;&#97;&#109;&#98;&#100;&#97;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#112;&#100;&#97;&#116;&#101;&#32;&#76;&#97;&#109;&#98;&#100;&#97;&#32;&#70;&#117;&#110;&#99;&#116;&#105;&#111;&#110;&#32;&#67;&#111;&#100;&#101;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#108;&#97;&#109;&#98;&#100;&#97;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#112;&#100;&#97;&#116;&#101;&#32;&#76;&#97;&#109;&#98;&#100;&#97;&#32;&#70;&#117;&#110;&#99;&#116;&#105;&#111;&#110;&#32;&#67;&#111;&#110;&#102;&#105;&#103;&#117;&#114;&#97;&#116;&#105;&#111;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#108;&#97;&#109;&#98;&#100;&#97;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#82;&#117;&#110;&#32;&#73;&#110;&#115;&#116;&#97;&#110;&#99;&#101;&#115;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#101;&#99;&#50;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#82;&#117;&#110;&#32;&#73;&#110;&#115;&#116;&#97;&#110;&#99;&#101;&#115;&#32;&#105;&#110;&#32;&#78;&#111;&#110;&#45;&#97;&#112;&#112;&#114;&#111;&#118;&#101;&#100;&#32;&#82;&#101;&#103;&#105;&#111;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#97;&#119;&#115;">&#65;&#87;&#83;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#99;&#108;&#111;&#117;&#100;</mark>&#13;
+&#32;&#32;&#32;&#32;<mark class="&#116;&#97;&#103;&#115;">&#97;&#119;&#115;&#95;&#101;&#99;&#50;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#32;&#13;
+&#13;
+&#32;&#32;<!-- Okta -->&#13;
+&#32;&#32;<!-- https://github.com/falcosecurity/plugins/blob/master/plugins/okta/rules/okta_rules.yaml -->&#13;
+&#32;&#32;<li><a href="&#35;">&#67;&#114;&#101;&#97;&#116;&#105;&#110;&#103;&#32;&#97;&#32;&#110;&#101;&#119;&#32;&#79;&#75;&#84;&#65;&#32;&#117;&#115;&#101;&#114;&#32;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#115;&#101;&#114;&#32;&#97;&#99;&#99;&#101;&#115;&#115;&#105;&#110;&#103;&#32;&#97;&#112;&#112;&#32;&#118;&#105;&#97;&#32;&#115;&#105;&#110;&#103;&#108;&#101;&#32;&#115;&#105;&#103;&#110;&#32;&#111;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#115;&#101;&#114;&#32;&#104;&#97;&#115;&#32;&#98;&#101;&#101;&#110;&#32;&#108;&#111;&#99;&#107;&#101;&#100;&#32;&#111;&#117;&#116;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#110;&#111;&#116;&#105;&#99;&#101;">&#78;&#79;&#84;&#73;&#67;&#69;</mark>&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#115;&#101;&#114;&#32;&#104;&#97;&#115;&#32;&#98;&#101;&#101;&#110;&#32;&#109;&#111;&#118;&#101;&#100;&#32;&#102;&#114;&#111;&#109;&#32;&#115;&#117;&#115;&#112;&#101;&#110;&#100;&#101;&#100;&#32;&#115;&#116;&#97;&#116;&#117;&#115;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#115;&#101;&#114;&#32;&#104;&#97;&#115;&#32;&#98;&#101;&#101;&#110;&#32;&#97;&#99;&#116;&#105;&#118;&#97;&#116;&#101;&#100;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#115;&#101;&#114;&#32;&#104;&#97;&#115;&#32;&#98;&#101;&#101;&#110;&#32;&#100;&#101;&#97;&#99;&#116;&#105;&#118;&#97;&#116;&#101;&#100;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#115;&#101;&#114;&#32;&#104;&#97;&#115;&#32;&#98;&#101;&#101;&#110;&#32;&#115;&#117;&#115;&#112;&#101;&#110;&#100;&#101;&#100;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#65;&#100;&#109;&#105;&#110;&#32;&#112;&#101;&#114;&#109;&#105;&#115;&#115;&#105;&#111;&#110;&#32;&#104;&#97;&#115;&#32;&#98;&#101;&#101;&#110;&#32;&#97;&#115;&#115;&#105;&#103;&#110;&#101;&#100;&#32;&#116;&#111;&#32;&#97;&#32;&#117;&#115;&#101;&#114;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#67;&#114;&#101;&#97;&#116;&#105;&#110;&#103;&#32;&#97;&#32;&#110;&#101;&#119;&#32;&#79;&#75;&#84;&#65;&#32;&#65;&#80;&#73;&#32;&#116;&#111;&#107;&#101;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#85;&#115;&#101;&#114;&#32;&#97;&#99;&#99;&#101;&#115;&#115;&#105;&#110;&#103;&#32;&#79;&#75;&#84;&#65;&#32;&#97;&#100;&#109;&#105;&#110;&#32;&#115;&#101;&#99;&#116;&#105;&#111;&#110;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#32;&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#65;&#100;&#100;&#105;&#110;&#103;&#32;&#117;&#115;&#101;&#114;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#32;&#103;&#114;&#111;&#117;&#112;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#32;&#32;<li><a href="&#35;">&#114;&#101;&#109;&#111;&#118;&#105;&#110;&#103;&#32;&#77;&#70;&#65;&#32;&#102;&#97;&#99;&#116;&#111;&#114;&#32;&#102;&#114;&#111;&#109;&#32;&#117;&#115;&#101;&#114;&#32;&#105;&#110;&#32;&#79;&#75;&#84;&#65;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#111;&#107;&#116;&#97;">&#111;&#107;&#116;&#97;</mark>&#32;&#32;&#13;
+&#32;&#32;</a></li>&#13;
+&#13;
+&#32;&#32;<li><a href="&#35;">&#67;&#111;&#110;&#116;&#97;&#105;&#110;&#101;&#114;&#32;&#68;&#114;&#105;&#102;&#116;&#32;&#68;&#101;&#116;&#101;&#99;&#116;&#101;&#100;&#32;&#40;&#99;&#104;&#109;&#111;&#100;&#41;&#13;
+&#32;&#32;&#32;&#32;<mark class="&#101;&#114;&#114;">&#69;&#82;&#82;&#79;&#82;</mark>&#13;
+&#32;&#32;</a></li>&#32;&#13;
+&#13;
 </ul>
 
 <div class="navbar">
-  <a href="#home" class="active">Created By</a>
+  <a href="#home" class="active">Hacked Together By</a>
   <a href="https://www.linkedin.com/in/daniellapontes">Daniella Pontes</a>
   <a href="https://www.linkedin.com/in/matt-kim-24925756">Matt Kim</a>
   <a href="https://ie.linkedin.com/in/nigel-douglas-9b64b5139">Nigel Douglas</a>
